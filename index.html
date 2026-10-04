@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>વર્નિયર કેલિપર HD સિમ્યુલેટર (Precision Scale)</title>
+  <title>વર્નિયર કેલિપર HD સિમ્યુલેટર (0.02 mm LC)</title>
   <style>
     * {
       box-sizing: border-box;
@@ -12,650 +12,349 @@
       padding: 0;
     }
     body {
-      background-color: #f1f5f9;
+      background-color: #0f172a;
+      color: #f8fafc;
       display: flex;
       justify-content: center;
-      padding: 12px;
-    }
-    .container {
-      background: #ffffff;
-      max-width: 520px;
-      width: 100%;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
       padding: 16px;
     }
-    .header {
-      background-color: #0f172a;
-      color: #ffffff;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 12px;
+    .container {
+      background: #1e293b;
+      max-width: 600px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      padding: 20px;
+      border: 1px solid #334155;
     }
-    .title-section {
-      text-align: center;
+    .header-tag {
+      background-color: #3b82f6;
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: bold;
+      display: inline-block;
       margin-bottom: 12px;
     }
     .title-section h1 {
-      font-size: 20px;
-      color: #0f172a;
-      font-weight: 800;
+      font-size: 22px;
+      color: #f8fafc;
+      margin-bottom: 4px;
     }
     .title-section p {
-      font-size: 12px;
-      color: #64748b;
-    }
-    .nav-tabs {
-      display: flex;
-      background: #f1f5f9;
-      border-radius: 8px;
-      padding: 4px;
-      margin-bottom: 12px;
-    }
-    .tab {
-      flex: 1;
-      text-align: center;
-      padding: 8px;
-      font-weight: 700;
-      border-radius: 6px;
-      cursor: pointer;
       font-size: 13px;
-      color: #64748b;
-      user-select: none;
+      color: #94a3b8;
+      margin-bottom: 16px;
     }
-    .tab.active {
-      background: #ffffff;
-      color: #0f172a;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    .simulator-card {
-      border: 2px solid #94a3b8;
+    .canvas-card {
+      background: #000000;
+      border: 2px solid #475569;
       border-radius: 12px;
-      padding: 4px;
-      background: #0f172a;
-      margin-bottom: 12px;
+      padding: 6px;
+      margin-bottom: 16px;
       overflow: hidden;
     }
     canvas {
       width: 100%;
-      height: 240px;
+      height: 220px;
       display: block;
-      border-radius: 8px;
       background: #ffffff;
+      border-radius: 6px;
     }
-    .result-box {
-      background: #eff6ff;
-      border-left: 5px solid #2563eb;
-      border-radius: 8px;
-      padding: 12px 16px;
+    .result-card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+    .result-main {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #334155;
+      margin-bottom: 10px;
     }
     .result-title {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
-      color: #1e293b;
+      color: #cbd5e1;
     }
     .result-value {
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 800;
-      color: #1d4ed8;
+      color: #38bdf8;
+    }
+    .calc-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #94a3b8;
+    }
+    .calc-row strong {
+      color: #f8fafc;
+    }
+    .highlight-red {
+      color: #ef4444;
+      font-weight: bold;
+    }
+    .highlight-blue {
+      color: #38bdf8;
+      font-weight: bold;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
     .btn-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
-      margin-bottom: 12px;
     }
     .btn {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
+      background: #334155;
+      border: 1px solid #475569;
+      color: #ffffff;
       padding: 10px 0;
       font-weight: 700;
-      color: #334155;
+      border-radius: 8px;
       cursor: pointer;
       font-size: 14px;
+      transition: 0.2s;
     }
     .btn:active {
-      background: #e2e8f0;
-    }
-    .slider-container {
-      margin-bottom: 12px;
+      background: #3b82f6;
     }
     .slider {
       width: 100%;
-      height: 8px;
-      border-radius: 4px;
-      background: #cbd5e1;
+      height: 10px;
+      border-radius: 5px;
+      background: #475569;
       outline: none;
-      accent-color: #2563eb;
+      accent-color: #38bdf8;
+      cursor: pointer;
     }
     .reset-btn {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #dc2626;
-      border-radius: 8px;
-      padding: 8px 14px;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-block;
-      margin-bottom: 12px;
-      font-size: 13px;
-    }
-    .formula-card {
-      background: #f8fafc;
-      border-radius: 10px;
-      padding: 12px;
-      border: 1px solid #e2e8f0;
-    }
-    .formula-title {
-      font-weight: 700;
-      color: #334155;
-      margin-bottom: 8px;
-      font-size: 13px;
-    }
-    .formula-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12.5px;
-      margin-bottom: 6px;
-      color: #475569;
-    }
-    .formula-row span.label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .dot-blue { color: #2563eb; }
-    .dot-red { color: #ef4444; }
-    .calc-sum {
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px dashed #cbd5e1;
-      font-weight: 700;
-      color: #1d4ed8;
-      font-size: 13px;
-    }
-
-    /* 🎯 ટેસ્ટ મોડ કસ્ટમ સ્ટાઈલ્સ */
-    .test-card {
-      background: #f8fafc;
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 12px;
-    }
-    .test-input-group {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-    .test-input {
-      flex: 1;
+      background: #7f1d1d;
+      border: 1px solid #991b1b;
+      color: #fecaca;
       padding: 10px;
-      font-size: 16px;
-      font-weight: 700;
-      border: 2px solid #cbd5e1;
-      border-radius: 8px;
-      outline: none;
-      text-align: center;
-    }
-    .test-input:focus {
-      border-color: #2563eb;
-    }
-    .btn-submit {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 0 16px;
       font-weight: 700;
       border-radius: 8px;
       cursor: pointer;
-    }
-    .btn-submit:active {
-      background: #1d4ed8;
-    }
-    .test-actions {
-      display: flex;
-      gap: 8px;
-    }
-    .btn-action {
-      flex: 1;
-      padding: 8px;
-      font-weight: 700;
-      font-size: 12px;
-      border-radius: 6px;
-      border: 1px solid #cbd5e1;
-      background: #ffffff;
-      cursor: pointer;
-    }
-    .feedback-msg {
-      margin-top: 10px;
-      padding: 8px 12px;
-      border-radius: 6px;
       font-size: 13px;
-      font-weight: 700;
-      text-align: center;
-      display: none;
-    }
-    .feedback-correct {
-      background: #dcfce7;
-      color: #15803d;
-      border: 1px solid #bbf7d0;
-    }
-    .feedback-wrong {
-      background: #fee2e2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-    }
-
-    .footer {
-      text-align: center;
-      margin-top: 12px;
-      font-size: 11px;
-      color: #94a3b8;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="header">
-    ⚙️ Created by: Yuvrajsinh Kosamia | ITI Ankleshwar
-  </div>
-
+  <div class="header-tag">⚙️ High-Precision Mechanical Simulator</div>
+  
   <div class="title-section">
-    <h1>વર્નિયર કેલિપર (HD Precision)</h1>
-    <p>ઝૂમ-ઇન હાઇ-ડેફિનેશન સ્કેલ (LC: 0.02 mm)</p>
+    <h1>વર્નિયર કેલિપર સિમ્યુલેટર</h1>
+    <p>લઘુત્તમ માપશક્તિ (Least Count): 0.02 mm</p>
   </div>
 
-  <div class="nav-tabs">
-    <div class="tab active" id="tabLearn" onclick="switchMode('learn')">📘 શીખો</div>
-    <div class="tab" id="tabTest" onclick="switchMode('test')">🎯 ટેસ્ટ લેબ</div>
-  </div>
-
-  <div class="simulator-card">
+  <div class="canvas-card">
     <canvas id="caliperCanvas"></canvas>
   </div>
 
-  <!-- શીખો (Learn) મોડના કંટ્રોલ્સ -->
-  <div id="learnControls">
-    <div class="result-box">
-      <span class="result-title">કુલ રીડિંગ:</span>
+  <div class="result-card">
+    <div class="result-main">
+      <span class="result-title">કુલ માપ (Total Reading):</span>
       <span class="result-value" id="totalReading">0.00 mm</span>
     </div>
+    
+    <div class="calc-row">
+      <span>1. મેઇન સ્કેલ રીડિંગ (<span class="highlight-blue">MSR</span>):</span>
+      <strong id="msrVal">0.00 mm</strong>
+    </div>
+    <div class="calc-row">
+      <span>2. મેચ થતો કાપો (<span class="highlight-red">VSR Division</span>):</span>
+      <strong id="divVal">0 (કાપો)</strong>
+    </div>
+    <div class="calc-row">
+      <span>3. વર્નિયર સ્કેલ રીડિંગ (VSR = કાપો × 0.02):</span>
+      <strong id="vsrVal">0.00 mm</strong>
+    </div>
+  </div>
 
+  <div class="controls">
+    <input type="range" id="slider" class="slider" min="0" max="40" step="0.02" value="0.00">
+    
     <div class="btn-grid">
-      <button class="btn" onclick="adjustValue(-1.00)">-1.00</button>
-      <button class="btn" onclick="adjustValue(-0.02)">-0.02</button>
-      <button class="btn" onclick="adjustValue(0.02)">+0.02</button>
-      <button class="btn" onclick="adjustValue(1.00)">+1.00</button>
+      <button class="btn" onclick="adjust(-1.00)">-1.00</button>
+      <button class="btn" onclick="adjust(-0.02)">-0.02</button>
+      <button class="btn" onclick="adjust(0.02)">+0.02</button>
+      <button class="btn" onclick="adjust(1.00)">+1.00</button>
     </div>
 
-    <div class="slider-container">
-      <input type="range" id="caliperSlider" class="slider" min="0" max="40" step="0.02" value="0.00">
-    </div>
-
-    <button class="reset-btn" onclick="resetValue()">↺ 0.00 સેટ કરો</button>
-
-    <div class="formula-card">
-      <div class="formula-title">📊 રીડિંગ ગણતરી (Formula):</div>
-      
-      <div class="formula-row">
-        <span class="label"><strong class="dot-blue">■</strong> Main Scale (ઝીરો ૦ પહેલાનો કાપો):</span>
-        <span id="msrVal">0.00 mm</span>
-      </div>
-      <div class="formula-row">
-        <span class="label"><strong class="dot-red">■</strong> Vernier Scale (કાપો × 0.02 mm):</span>
-        <span id="vsrVal">0.00 mm</span>
-      </div>
-
-      <div class="calc-sum" id="sumFormula">
-        સરવાળો (MSR + VSR): 0 + 0.00 = 0.00 mm
-      </div>
-    </div>
-  </div>
-
-  <!-- ટેસ્ટ લેબ (Test Lab) મોડના કંટ્રોલ્સ -->
-  <div id="testControls" style="display: none;">
-    <div class="test-card">
-      <div class="formula-title" style="text-align: center; margin-bottom: 10px;">
-        🔍 ઉપર દર્શાવેલ વર્નિયર કેલિપરનું રીડિંગ શોધો:
-      </div>
-      
-      <div class="test-input-group">
-        <input type="number" id="userAnswer" class="test-input" placeholder="0.00" step="0.02">
-        <button class="btn-submit" onclick="checkAnswer()">તપાસો</button>
-      </div>
-
-      <div class="test-actions">
-        <button class="btn-action" onclick="generateNewQuestion()">🎲 નવો પ્રશ્ન</button>
-        <button class="btn-action" onclick="revealAnswer()">👁 જવાબ બતાવો</button>
-      </div>
-
-      <div id="feedbackMsg" class="feedback-msg"></div>
-    </div>
-
-    <div id="testFormulaCard" class="formula-card" style="display: none;">
-      <div class="formula-title">📊 રીડિંગ ગણતરી (Formula):</div>
-      
-      <div class="formula-row">
-        <span class="label"><strong class="dot-blue">■</strong> Main Scale Reading (MSR):</span>
-        <span id="testMsrVal">0.00 mm</span>
-      </div>
-      <div class="formula-row">
-        <span class="label"><strong class="dot-red">■</strong> Vernier Scale Reading (VSR):</span>
-        <span id="testVsrVal">0.00 mm</span>
-      </div>
-
-      <div class="calc-sum" id="testSumFormula">
-        સરવાળો: 0.00 mm
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">
-    ITI Ankleshwar | Mechanical Engineering Workshop Simulator
+    <button class="reset-btn" onclick="resetVal()">↺ 0.00 સેટ કરો</button>
   </div>
 </div>
 
 <script>
   const canvas = document.getElementById('caliperCanvas');
   const ctx = canvas.getContext('2d');
-  const slider = document.getElementById('caliperSlider');
+  const slider = document.getElementById('slider');
 
-  let currentValue = 0.00;
-  let currentMode = 'learn';
-  let targetValue = 0.00;
+  let val = 0.00;
 
-  function resizeCanvas() {
-    const width = canvas.clientWidth;
-    const height = 240;
-    const ratio = window.devicePixelRatio || 2;
-
-    canvas.width = width * ratio;
-    canvas.height = height * ratio;
-    ctx.scale(ratio, ratio);
-    drawCaliper();
+  function resize() {
+    const r = window.devicePixelRatio || 2;
+    canvas.width = canvas.clientWidth * r;
+    canvas.height = 220 * r;
+    ctx.scale(r, r);
+    draw();
   }
 
-  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('resize', resize);
 
-  function updateReading(val) {
-    currentValue = Math.min(Math.max(parseFloat(val), 0), 40);
-    slider.value = currentValue.toFixed(2);
+  function update(newVal) {
+    val = Math.min(Math.max(parseFloat(newVal), 0), 40);
+    val = Math.round(val * 50) / 50; // 0.02 ના ગુણાંકમાં રાઉન્ડ
+    slider.value = val.toFixed(2);
 
-    const msr = Math.floor(currentValue);
-    const vsr = parseFloat((currentValue - msr).toFixed(2));
-    const vernierDivision = Math.round(vsr / 0.02);
+    const msr = Math.floor(val);
+    const vsr = parseFloat((val - msr).toFixed(2));
+    const div = Math.round(vsr / 0.02);
 
-    // શીખો મોડ અપડેટ
-    document.getElementById('totalReading').innerText = currentValue.toFixed(2) + " mm";
+    document.getElementById('totalReading').innerText = val.toFixed(2) + " mm";
     document.getElementById('msrVal').innerText = msr.toFixed(2) + " mm";
-    document.getElementById('vsrVal').innerText = `${vsr.toFixed(2)} mm (કાપો #${vernierDivision})`;
-    
-    document.getElementById('sumFormula').innerText = 
-      `સરવાળો (MSR + VSR): ${msr} + ${vsr.toFixed(2)} = ${currentValue.toFixed(2)} mm`;
+    document.getElementById('divVal').innerText = div + " મો કાપો";
+    document.getElementById('vsrVal').innerText = `${div} × 0.02 = ${vsr.toFixed(2)} mm`;
 
-    // ટેસ્ટ મોડ હિડન ગણતરી અપડેટ
-    document.getElementById('testMsrVal').innerText = msr.toFixed(2) + " mm";
-    document.getElementById('testVsrVal').innerText = `${vsr.toFixed(2)} mm (કાપો #${vernierDivision})`;
-    document.getElementById('testSumFormula').innerText = 
-      `સરવાળો: ${msr} + ${vsr.toFixed(2)} = ${currentValue.toFixed(2)} mm`;
-
-    drawCaliper();
+    draw();
   }
 
-  function adjustValue(delta) {
-    updateReading(currentValue + delta);
+  function adjust(delta) {
+    update(val + delta);
   }
 
-  function resetValue() {
-    updateReading(0.00);
+  function resetVal() {
+    update(0.00);
   }
 
-  slider.addEventListener('input', (e) => {
-    updateReading(e.target.value);
-  });
+  slider.addEventListener('input', (e) => update(e.target.value));
 
-  function switchMode(mode) {
-    currentMode = mode;
-    const learnTab = document.getElementById('tabLearn');
-    const testTab = document.getElementById('tabTest');
-    const learnControls = document.getElementById('learnControls');
-    const testControls = document.getElementById('testControls');
-
-    if (mode === 'learn') {
-      learnTab.classList.add('active');
-      testTab.classList.remove('active');
-      learnControls.style.display = 'block';
-      testControls.style.display = 'none';
-      updateReading(currentValue);
-    } else {
-      testTab.classList.add('active');
-      learnTab.classList.remove('active');
-      learnControls.style.display = 'none';
-      testControls.style.display = 'block';
-      generateNewQuestion();
-    }
-  }
-
-  function generateNewQuestion() {
-    // 0.00 થી 35.00 mm વચ્ચે રેન્ડમ અંક generate કરવો
-    targetValue = (Math.floor(Math.random() * 1750) * 0.02);
-    updateReading(targetValue);
-
-    document.getElementById('userAnswer').value = '';
-    document.getElementById('testFormulaCard').style.display = 'none';
-    
-    const feedback = document.getElementById('feedbackMsg');
-    feedback.style.display = 'none';
-    feedback.className = 'feedback-msg';
-  }
-
-  function checkAnswer() {
-    const userVal = parseFloat(document.getElementById('userAnswer').value);
-    const feedback = document.getElementById('feedbackMsg');
-
-    if (isNaN(userVal)) {
-      feedback.innerText = "⚠️ કૃપા કરીને તમારો જવાબ દાખલ કરો!";
-      feedback.className = "feedback-msg feedback-wrong";
-      feedback.style.display = "block";
-      return;
-    }
-
-    if (Math.abs(userVal - targetValue) < 0.01) {
-      feedback.innerText = "🎉 એકદમ સાચો જવાબ! ખૂબ સરસ.";
-      feedback.className = "feedback-msg feedback-correct";
-      document.getElementById('testFormulaCard').style.display = 'block';
-    } else {
-      feedback.innerText = `❌ ખોટો જવાબ! ફરી પ્રયાસ કરો.`;
-      feedback.className = "feedback-msg feedback-wrong";
-    }
-    feedback.style.display = "block";
-  }
-
-  function revealAnswer() {
-    document.getElementById('userAnswer').value = targetValue.toFixed(2);
-    const feedback = document.getElementById('feedbackMsg');
-    feedback.innerText = `💡 સાચો જવાબ ${targetValue.toFixed(2)} mm છે.`;
-    feedback.className = "feedback-msg feedback-correct";
-    feedback.style.display = "block";
-    document.getElementById('testFormulaCard').style.display = 'block';
-  }
-
-  // High-Precision Vernier Rendering Engine
-  function drawCaliper() {
+  function draw() {
     const w = canvas.clientWidth;
-    const h = 240;
-
+    const h = 220;
     ctx.clearRect(0, 0, w, h);
 
-    // Zoomed Scale Parameters for Ultimate Clarity
-    const pxPerMM = 11; // 11px per mm (Ultra Clear Spacing)
-    const fixedJawX = 45;
-    const mainScaleY = 50;
-    const mainScaleHeight = 65;
+    const pxPerMM = 16; // ઝૂમ-ઇન કાપા માટે પૂરતી જગ્યા
+    const startX = 40;
+    const centerLineY = 95; // જ્યાં બંને સ્કેલના કાપા સામસામે મળે છે
 
-    // 1. MAIN BEAM (Stainless Steel Finish)
-    let beamGrad = ctx.createLinearGradient(0, mainScaleY, 0, mainScaleY + mainScaleHeight);
-    beamGrad.addColorStop(0, '#cbd5e1');
-    beamGrad.addColorStop(0.3, '#f8fafc');
-    beamGrad.addColorStop(0.7, '#e2e8f0');
-    beamGrad.addColorStop(1, '#94a3b8');
+    // 1. મેઇન સ્કેલ (ઉપરની પટ્ટી)
+    ctx.fillStyle = '#e2e8f0';
+    ctx.fillRect(10, 20, w - 20, 75);
+    ctx.strokeStyle = '#64748b';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(10, 20, w - 20, 75);
 
-    ctx.fillStyle = beamGrad;
-    ctx.fillRect(10, mainScaleY, w - 20, mainScaleHeight);
-    ctx.strokeStyle = '#475569';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(10, mainScaleY, w - 20, mainScaleHeight);
-
-    // FIXED JAW (Left Jaw)
-    ctx.beginPath();
-    ctx.moveTo(fixedJawX, mainScaleY + mainScaleHeight);
-    ctx.lineTo(fixedJawX, mainScaleY + mainScaleHeight + 90);
-    ctx.quadraticCurveTo(fixedJawX - 15, mainScaleY + mainScaleHeight + 110, fixedJawX - 35, mainScaleY + mainScaleHeight + 70);
-    ctx.lineTo(fixedJawX - 35, mainScaleY);
-    ctx.lineTo(10, mainScaleY);
-    ctx.lineTo(10, mainScaleY + mainScaleHeight);
-    ctx.closePath();
-    ctx.fillStyle = beamGrad;
-    ctx.fill();
-    ctx.stroke();
-
-    // 2. MAIN SCALE GRADUATIONS (Heavy Black Lines)
-    const startViewMM = 0;
-    const endViewMM = 45;
-
-    for (let i = startViewMM; i <= endViewMM; i++) {
-      let x = fixedJawX + (i * pxPerMM);
-      if (x <= w - 15) {
+    // મેઇન સ્કેલ કાપા (નીચેની તરફ આવતા)
+    for (let i = 0; i <= 45; i++) {
+      let x = startX + (i * pxPerMM);
+      if (x < w - 15) {
         let isMajor = i % 10 === 0;
         let isMedium = i % 5 === 0;
+        let lineH = isMajor ? 32 : (isMedium ? 22 : 14);
 
         ctx.beginPath();
-        ctx.moveTo(x, mainScaleY + mainScaleHeight);
-        ctx.lineTo(x, mainScaleY + mainScaleHeight - (isMajor ? 28 : (isMedium ? 20 : 12)));
+        ctx.moveTo(x, centerLineY);
+        ctx.lineTo(x, centerLineY - lineH);
         ctx.strokeStyle = '#000000';
-        ctx.lineWidth = isMajor ? 2.2 : (isMedium ? 1.6 : 1.2);
+        ctx.lineWidth = isMajor ? 2 : 1.2;
         ctx.stroke();
 
-        // Main Scale Numbers (Clear Bold)
         if (isMajor) {
           ctx.fillStyle = '#0f172a';
-          ctx.font = '900 13px Arial, sans-serif';
+          ctx.font = 'bold 12px Arial';
           ctx.textAlign = 'center';
-          ctx.fillText(i, x, mainScaleY + 22);
+          ctx.fillText(i, x, centerLineY - 37);
         }
       }
     }
 
-    // 3. MOVABLE VERNIER SLIDER
-    let vernierX = fixedJawX + (currentValue * pxPerMM);
+    // 2. વર્નિયર સ્લાઇડર (નીચેની પટ્ટી)
+    let vX = startX + (val * pxPerMM);
 
-    let sliderGrad = ctx.createLinearGradient(0, mainScaleY - 15, 0, mainScaleY + mainScaleHeight + 100);
-    sliderGrad.addColorStop(0, '#f1f5f9');
-    sliderGrad.addColorStop(0.2, '#ffffff');
-    sliderGrad.addColorStop(0.8, '#cbd5e1');
-    sliderGrad.addColorStop(1, '#64748b');
-
-    // Movable Jaw & Vernier Body Shape
-    ctx.beginPath();
-    ctx.moveTo(vernierX - 15, mainScaleY - 12);
-    ctx.lineTo(vernierX + 270, mainScaleY - 12);
-    ctx.lineTo(vernierX + 270, mainScaleY + mainScaleHeight + 15);
-    ctx.lineTo(vernierX + 45, mainScaleY + mainScaleHeight + 15);
-    ctx.lineTo(vernierX, mainScaleY + mainScaleHeight + 90);
-    ctx.quadraticCurveTo(vernierX - 10, mainScaleY + mainScaleHeight + 95, vernierX - 15, mainScaleY + mainScaleHeight + 70);
-    ctx.lineTo(vernierX - 15, mainScaleY - 12);
-    ctx.closePath();
-    ctx.fillStyle = sliderGrad;
-    ctx.fill();
-    ctx.strokeStyle = '#1e293b';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // Vernier Scale Cutout Window
-    const winWidth = 245;
-    const winHeight = 36;
-    const winY = mainScaleY + mainScaleHeight - winHeight;
-
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(vernierX, winY, winWidth, winHeight);
+    ctx.fillStyle = '#f1f5f9';
+    ctx.fillRect(vX - 10, centerLineY, 260, 80);
     ctx.strokeStyle = '#334155';
-    ctx.lineWidth = 1.5;
-    ctx.strokeRect(vernierX, winY, winWidth, winHeight);
+    ctx.lineWidth = 2;
+    ctx.strokeRect(vX - 10, centerLineY, 260, 80);
 
-    // 4. VERNIER SCALE GRADUATIONS (50 divisions = 49 mm)
-    // 1 Vernier Division = 0.98 mm -> 0.98 * pxPerMM
-    const vDivPx = 0.98 * pxPerMM;
-    const currentVsrDiv = Math.round(((currentValue % 1).toFixed(2)) / 0.02);
+    // વર્નિયર સ્કેલ કાપા (ઉપરની તરફ જતા - Face to Face)
+    const activeDiv = Math.round(((val % 1).toFixed(2)) / 0.02);
 
     for (let j = 0; j <= 50; j++) {
-      let vx = vernierX + (j * vDivPx);
+      // 50 વર્નિયર કાપા = 49 mm
+      let vx = vX + (j * 0.98 * pxPerMM);
       let isMajor = j % 5 === 0;
-      let isCoinciding = (j === currentVsrDiv);
+      let isMatch = (j === activeDiv);
+      let lineH = isMajor ? 30 : 16;
 
-      if (vx <= vernierX + winWidth) {
+      if (vx < vX + 245) {
         ctx.beginPath();
-        ctx.moveTo(vx, winY);
-        ctx.lineTo(vx, winY + (isMajor ? 20 : 12));
+        ctx.moveTo(vx, centerLineY);
+        ctx.lineTo(vx, centerLineY + lineH);
 
-        if (isCoinciding) {
-          ctx.strokeStyle = '#dc2626'; // Red Highlight
-          ctx.lineWidth = 3;
+        if (isMatch) {
+          ctx.strokeStyle = '#dc2626'; // લાલ ગ્લો
+          ctx.lineWidth = 2.8;
         } else {
           ctx.strokeStyle = '#000000';
           ctx.lineWidth = isMajor ? 1.8 : 1.1;
         }
         ctx.stroke();
 
-        // Vernier Scale Numbers (0, 1, 2, ... 10)
+        // વર્નિયર સ્કેલ અંકો (0 થી 10)
         if (isMajor) {
-          ctx.fillStyle = isCoinciding ? '#dc2626' : '#000000';
-          ctx.font = '900 11px Arial, sans-serif';
+          ctx.fillStyle = isMatch ? '#dc2626' : '#000000';
+          ctx.font = 'bold 11px Arial';
           ctx.textAlign = 'center';
-          ctx.fillText(j / 5, vx, winY + 30);
+          ctx.fillText(j / 5, vx, centerLineY + 44);
         }
 
-        // Highlight matching box above coinciding line
-        if (isCoinciding) {
+        // મેચ થતા કાપા ઉપર બોક્સ
+        if (isMatch) {
           ctx.fillStyle = '#dc2626';
-          ctx.fillRect(vx - 12, winY - 18, 24, 15);
+          ctx.fillRect(vx - 14, centerLineY + 52, 28, 16);
           ctx.fillStyle = '#ffffff';
           ctx.font = 'bold 10px Arial';
           ctx.textAlign = 'center';
-          ctx.fillText('#' + j, vx, winY - 7);
+          ctx.fillText('#' + j, vx, centerLineY + 64);
         }
       }
     }
 
-    // 5. RED ZERO ARROW (MSR Indicator)
+    // 3. ઝીરો પોઇન્ટર તીર (MSR દર્શક)
     ctx.beginPath();
-    ctx.moveTo(vernierX, winY - 2);
-    ctx.lineTo(vernierX - 5, winY - 10);
-    ctx.lineTo(vernierX + 5, winY - 10);
+    ctx.moveTo(vX, centerLineY - 2);
+    ctx.lineTo(vX - 6, centerLineY - 12);
+    ctx.lineTo(vX + 6, centerLineY - 12);
     ctx.closePath();
     ctx.fillStyle = '#dc2626';
     ctx.fill();
 
-    // Text Label on Zero Indicator
     ctx.fillStyle = '#dc2626';
     ctx.font = 'bold 11px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('▼ 0', vernierX, winY - 13);
+    ctx.fillText('▼ 0', vX, centerLineY - 15);
   }
 
-  // Setup Canvas on Load
+  // Initial setup
   setTimeout(() => {
-    resizeCanvas();
-    updateReading(0.00);
-  }, 100);
+    resize();
+    update(0.00);
+  }, 50);
 </script>
 
 </body>
