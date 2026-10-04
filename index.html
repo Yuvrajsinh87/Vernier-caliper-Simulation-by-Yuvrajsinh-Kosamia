@@ -3,104 +3,124 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>વર્નિયર કેલિપર HD સિમ્યુલેટર - યુવરાજસિંહ કોસમીઆ</title>
+  <title>વર્નિયર કેલિપર સિમ્યુલેટર - Instructor: Yuvrajsinh Kosamia</title>
   <style>
     * {
       box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
     }
     body {
-      background-color: #f1f5f9;
+      background-color: #e2e8f0;
       color: #0f172a;
       display: flex;
       justify-content: center;
-      padding: 16px;
+      padding: 20px;
     }
     .container {
       background: #ffffff;
-      max-width: 750px;
+      max-width: 850px;
       width: 100%;
       border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      padding: 24px;
       border: 1px solid #cbd5e1;
     }
     .header {
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 10px;
+      border-bottom: 2px solid #cbd5e1;
+      padding-bottom: 12px;
       margin-bottom: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     .header h1 {
-      font-size: 20px;
+      font-size: 22px;
       color: #1e293b;
     }
-    .instructor-badge {
-      background-color: #2563eb;
+    .badge {
+      background-color: #1e40af;
       color: #ffffff;
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: 6px;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: bold;
     }
-    .canvas-container {
+    .canvas-card {
       background: #ffffff;
-      border: 1px solid #94a3b8;
+      border: 2px solid #94a3b8;
       border-radius: 8px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       overflow: hidden;
     }
     canvas {
       width: 100%;
-      height: 380px;
+      height: 320px;
       display: block;
+      background: #fafafa;
     }
-    .reading-display {
+    
+    /* ચોક્કસ ગણતરી બોર્ડ (Formula Section) */
+    .calc-card {
       background: #f8fafc;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 14px;
-      margin-bottom: 16px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      text-align: center;
+      border: 2px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
     }
-    .read-box {
-      background: #ffffff;
-      padding: 8px;
-      border-radius: 6px;
-      border: 1px solid #e2e8f0;
-    }
-    .read-box .label {
-      font-size: 11px;
-      color: #64748b;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-    .read-box .val {
-      font-size: 18px;
+    .calc-title {
+      font-size: 16px;
       font-weight: bold;
       color: #1e293b;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 6px;
+    }
+    .formula-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .formula-box {
+      background: #ffffff;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      text-align: center;
+    }
+    .formula-box .label {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: bold;
+    }
+    .formula-box .val {
+      font-size: 18px;
+      font-weight: bold;
+      color: #0f172a;
       margin-top: 4px;
     }
-    .read-box.total .val {
-      color: #dc2626;
-      font-size: 22px;
+    .formula-result {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #1d4ed8;
     }
+    
     .controls {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
     .slider {
       width: 100%;
-      height: 8px;
-      border-radius: 4px;
+      height: 10px;
+      border-radius: 5px;
       background: #cbd5e1;
       outline: none;
       accent-color: #2563eb;
@@ -109,28 +129,28 @@
     .btn-group {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
+      gap: 10px;
     }
     .btn {
-      background: #e2e8f0;
-      border: 1px solid #cbd5e1;
+      background: #f1f5f9;
+      border: 1px solid #94a3b8;
       color: #0f172a;
-      padding: 8px 0;
+      padding: 10px 0;
       font-weight: bold;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 14px;
     }
     .btn:hover {
       background: #cbd5e1;
     }
     .btn-reset {
-      background: #fee2e2;
+      background: #fef2f2;
       color: #dc2626;
-      border-color: #fecaca;
+      border-color: #fca5a5;
     }
     .btn-reset:hover {
-      background: #fca5a5;
+      background: #fecaca;
     }
   </style>
 </head>
@@ -140,41 +160,50 @@
   <div class="header">
     <div>
       <h1>વર્નિયર કેલિપર સિમ્યુલેટર</h1>
-      <small style="color: #64748b;">લઘુત્તમ માપશક્તિ (Least Count): 0.02 mm</small>
+      <small style="color: #64748b;">લઘુત્તમ માપશક્તિ (Least Count - LC): 0.02 mm</small>
     </div>
-    <div class="instructor-badge">
+    <div class="badge">
       Instructor: Yuvrajsinh Kosamia
     </div>
   </div>
 
-  <div class="canvas-container">
+  <div class="canvas-card">
     <canvas id="caliperCanvas"></canvas>
   </div>
 
-  <div class="reading-display">
-    <div class="read-box">
-      <div class="label">Main Scale (MSR)</div>
-      <div class="val" id="msrTxt">0.00 mm</div>
+  <!-- ચોક્કસ માપન ગણતરી સેક્શન -->
+  <div class="calc-card">
+    <div class="calc-title">📊 ગણતરી (Formula): Total = MSR + (VSD × LC)</div>
+    
+    <div class="formula-grid">
+      <div class="formula-box">
+        <div class="label">1. Main Scale (MSR)</div>
+        <div class="val" id="msrVal">0.00 mm</div>
+      </div>
+      <div class="formula-box">
+        <div class="label">2. Vernier Division (VSD)</div>
+        <div class="val" id="vsdVal">0 મો કાપો</div>
+      </div>
+      <div class="formula-box">
+        <div class="label">3. Least Count (LC)</div>
+        <div class="val">0.02 mm</div>
+      </div>
     </div>
-    <div class="read-box">
-      <div class="label">Vernier Scale (VSR)</div>
-      <div class="val" id="vsrTxt">0.00 mm</div>
-    </div>
-    <div class="read-box total">
-      <div class="label">Total Reading</div>
-      <div class="val" id="totalTxt">0.00 mm</div>
+
+    <div class="formula-result" id="finalFormula">
+      કુલ માપ = 0.00 + (0 × 0.02) = 0.00 mm
     </div>
   </div>
 
   <div class="controls">
-    <input type="range" id="slider" class="slider" min="0" max="40" step="0.02" value="0.00">
+    <input type="range" id="slider" class="slider" min="0" max="50" step="0.02" value="0.00">
     
     <div class="btn-group">
-      <button class="btn" onclick="addValue(-1.00)">-1.00</button>
-      <button class="btn" onclick="addValue(-0.02)">-0.02</button>
-      <button class="btn btn-reset" onclick="resetValue()">0.00</button>
-      <button class="btn" onclick="addValue(0.02)">+0.02</button>
-      <button class="btn" onclick="addValue(1.00)">+1.00</button>
+      <button class="btn" onclick="addVal(-1.00)">-1.00</button>
+      <button class="btn" onclick="addVal(-0.02)">-0.02</button>
+      <button class="btn btn-reset" onclick="resetVal()">0.00</button>
+      <button class="btn" onclick="addVal(0.02)">+0.02</button>
+      <button class="btn" onclick="addVal(1.00)">+1.00</button>
     </div>
   </div>
 </div>
@@ -189,7 +218,7 @@
   function resizeCanvas() {
     const ratio = window.devicePixelRatio || 2;
     canvas.width = canvas.clientWidth * ratio;
-    canvas.height = 380 * ratio;
+    canvas.height = 320 * ratio;
     ctx.scale(ratio, ratio);
     draw();
   }
@@ -197,26 +226,28 @@
   window.addEventListener('resize', resizeCanvas);
 
   function updateReading(val) {
-    reading = Math.min(Math.max(parseFloat(val), 0), 40);
-    reading = Math.round(reading * 50) / 50; // Round to nearest 0.02
+    reading = Math.min(Math.max(parseFloat(val), 0), 50);
+    reading = Math.round(reading * 50) / 50; // 0.02 precision
     slider.value = reading.toFixed(2);
 
     const msr = Math.floor(reading);
     const vsr = parseFloat((reading - msr).toFixed(2));
-    const div = Math.round(vsr / 0.02);
+    const vsd = Math.round(vsr / 0.02);
 
-    document.getElementById('msrTxt').innerText = msr.toFixed(2) + " mm";
-    document.getElementById('vsrTxt').innerText = `${vsr.toFixed(2)} mm (#${div})`;
-    document.getElementById('totalTxt').innerText = reading.toFixed(2) + " mm";
+    document.getElementById('msrVal').innerText = msr.toFixed(2) + " mm";
+    document.getElementById('vsdVal').innerText = vsd + " મો કાપો";
+    
+    document.getElementById('finalFormula').innerText = 
+      `કુલ માપ = ${msr.toFixed(2)} + (${vsd} × 0.02) = ${reading.toFixed(2)} mm`;
 
     draw();
   }
 
-  function addValue(delta) {
+  function addVal(delta) {
     updateReading(reading + delta);
   }
 
-  function resetValue() {
+  function resetVal() {
     updateReading(0.00);
   }
 
@@ -224,238 +255,160 @@
 
   function draw() {
     const w = canvas.clientWidth;
-    const h = 380;
+    const h = 320;
     ctx.clearRect(0, 0, w, h);
 
-    // Dynamic Variables
-    const pxPerMM = 10; 
-    const originX = 130;
-    const mainScaleY = 70;
-    const beamHeight = 45;
-    const centerLineY = mainScaleY + beamHeight; 
+    // Scaling Parameters (Ultra-Clean Zoomed Scale)
+    const pxPerMM = 14; 
+    const startX = 140;
+    const mainY = 60;
+    const beamH = 50;
+    const centerY = mainY + beamH; // 110
 
-    // ==========================================
-    // 1. MAIN BEAM & FIXED JAW
-    // ==========================================
-    let steelGrad = ctx.createLinearGradient(0, mainScaleY, 0, mainScaleY + beamHeight);
-    steelGrad.addColorStop(0, '#e2e8f0');
-    steelGrad.addColorStop(0.5, '#ffffff');
-    steelGrad.addColorStop(1, '#cbd5e1');
+    // 1. MAIN BEAM (Metallic Finish)
+    let beamGrad = ctx.createLinearGradient(0, mainY, 0, mainY + beamH);
+    beamGrad.addColorStop(0, '#e2e8f0');
+    beamGrad.addColorStop(0.5, '#ffffff');
+    beamGrad.addColorStop(1, '#cbd5e1');
 
-    // Main Beam
-    ctx.fillStyle = steelGrad;
-    ctx.fillRect(10, mainScaleY, w - 20, beamHeight);
+    ctx.fillStyle = beamGrad;
+    ctx.fillRect(10, mainY, w - 20, beamH);
     ctx.strokeStyle = '#475569';
     ctx.lineWidth = 1.5;
-    ctx.strokeRect(10, mainScaleY, w - 20, beamHeight);
+    ctx.strokeRect(10, mainY, w - 20, beamH);
 
-    // Fixed Jaw (Left Jaw)
+    // FIXED JAW (Left Side)
     ctx.beginPath();
-    ctx.moveTo(originX, centerLineY);
-    ctx.lineTo(originX, centerLineY + 110);
-    ctx.lineTo(originX - 25, centerLineY + 110);
-    ctx.lineTo(originX - 45, centerLineY + 30);
-    ctx.lineTo(originX - 45, mainScaleY - 45);
-    ctx.lineTo(originX - 20, mainScaleY - 45);
-    ctx.lineTo(originX - 20, mainScaleY);
-    ctx.lineTo(10, mainScaleY);
-    ctx.lineTo(10, centerLineY);
+    ctx.moveTo(startX, centerY);
+    ctx.lineTo(startX, centerY + 130);
+    ctx.lineTo(startX - 25, centerY + 130);
+    ctx.lineTo(startX - 45, centerY + 40);
+    ctx.lineTo(startX - 45, mainY - 40);
+    ctx.lineTo(startX - 20, mainY - 40);
+    ctx.lineTo(startX - 20, mainY);
+    ctx.lineTo(10, mainY);
+    ctx.lineTo(10, centerY);
     ctx.closePath();
-    ctx.fillStyle = steelGrad;
+    ctx.fillStyle = beamGrad;
     ctx.fill();
     ctx.stroke();
 
-    // Instructor Name on Main Beam (Updated Name)
-    ctx.fillStyle = '#334155';
-    ctx.font = 'bold 11px Arial';
+    // Instructor Branding
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 12px Arial';
     ctx.textAlign = 'left';
-    ctx.fillText("Instructor: Yuvrajsinh Kosamia", 20, mainScaleY - 10);
+    ctx.fillText("Instructor: Yuvrajsinh Kosamia", 20, mainY - 12);
 
-    // Main Scale Graduations
-    for (let i = 0; i <= 50; i++) {
-      let x = originX + (i * pxPerMM);
+    // MAIN SCALE GRADUATIONS (Facing Downwards)
+    for (let i = 0; i <= 60; i++) {
+      let x = startX + (i * pxPerMM);
       if (x < w - 20) {
         let isMajor = i % 10 === 0;
         let isMedium = i % 5 === 0;
-        let lineH = isMajor ? 22 : (isMedium ? 15 : 10);
+        let lineH = isMajor ? 26 : (isMedium ? 18 : 12);
 
         ctx.beginPath();
-        ctx.moveTo(x, centerLineY);
-        ctx.lineTo(x, centerLineY - lineH);
+        ctx.moveTo(x, centerY);
+        ctx.lineTo(x, centerY - lineH);
         ctx.strokeStyle = '#000000';
-        ctx.lineWidth = isMajor ? 1.8 : 1;
+        ctx.lineWidth = isMajor ? 2 : 1.2;
         ctx.stroke();
 
         if (isMajor) {
           ctx.fillStyle = '#000000';
-          ctx.font = 'bold 12px Arial';
+          ctx.font = 'bold 13px Arial';
           ctx.textAlign = 'center';
-          ctx.fillText(i / 10, x, centerLineY - 26);
+          ctx.fillText(i / 10, x, centerY - 30);
         }
       }
     }
 
-    // ==========================================
     // 2. MOVABLE SLIDER & VERNIER SCALE
-    // ==========================================
-    let slideX = originX + (reading * pxPerMM);
+    let sliderX = startX + (reading * pxPerMM);
 
-    // Movable Jaw Body
+    // Movable Jaw Shape
     ctx.beginPath();
-    ctx.moveTo(slideX - 20, mainScaleY - 5);
-    ctx.lineTo(slideX + 170, mainScaleY - 5);
-    ctx.lineTo(slideX + 170, centerLineY + 35);
-    ctx.lineTo(slideX + 25, centerLineY + 35);
-    ctx.lineTo(slideX, centerLineY + 110);
-    ctx.lineTo(slideX - 20, centerLineY + 110);
-    ctx.lineTo(slideX - 20, mainScaleY - 5);
+    ctx.moveTo(sliderX - 20, mainY - 10);
+    ctx.lineTo(sliderX + 220, mainY - 10);
+    ctx.lineTo(sliderX + 220, centerY + 40);
+    ctx.lineTo(sliderX + 30, centerY + 40);
+    ctx.lineTo(sliderX, centerY + 130);
+    ctx.lineTo(sliderX - 25, centerY + 130);
+    ctx.lineTo(sliderX - 20, mainY - 10);
     ctx.closePath();
-    ctx.fillStyle = steelGrad;
+    ctx.fillStyle = beamGrad;
     ctx.fill();
     ctx.strokeStyle = '#334155';
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
     // Vernier Scale Window
-    const winW = 150;
-    const winH = 28;
+    const winW = 190;
+    const winH = 34;
     ctx.fillStyle = '#ffffff';
-    ctx.fillRect(slideX, centerLineY, winW, winH);
-    ctx.strokeRect(slideX, centerLineY, winW, winH);
+    ctx.fillRect(sliderX, centerY, winW, winH);
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(sliderX, centerY, winW, winH);
 
-    // Vernier Scale Lines (50 div = 49 mm)
+    // Lock Screw Top
+    ctx.fillStyle = '#64748b';
+    ctx.fillRect(sliderX + 80, mainY - 22, 24, 12);
+    ctx.strokeRect(sliderX + 80, mainY - 22, 24, 12);
+
+    // VERNIER SCALE GRADUATIONS (Facing Upwards - Face to Face)
+    // 50 Divisions = 49 mm -> 0.98 ratio
     const activeDiv = Math.round(((reading % 1).toFixed(2)) / 0.02);
 
     for (let j = 0; j <= 50; j++) {
-      let vx = slideX + (j * 0.98 * (pxPerMM / 5)); 
-      if (vx <= slideX + winW) {
+      let vx = sliderX + (j * 0.98 * (pxPerMM / 5)); // 5 divisions per mm
+      if (vx <= sliderX + winW) {
         let isMajor = j % 5 === 0;
-        let lineH = isMajor ? 16 : 9;
+        let isMatch = (j === activeDiv);
+        let lineH = isMajor ? 20 : 12;
 
         ctx.beginPath();
-        ctx.moveTo(vx, centerLineY);
-        ctx.lineTo(vx, centerLineY + lineH);
-        ctx.strokeStyle = (j === activeDiv) ? '#dc2626' : '#000000';
-        ctx.lineWidth = (j === activeDiv) ? 2 : (isMajor ? 1.4 : 0.9);
-        ctx.stroke();
-
-        if (isMajor) {
-          ctx.fillStyle = '#000000';
-          ctx.font = '9px Arial';
-          ctx.textAlign = 'center';
-          ctx.fillText(j / 5, vx, centerLineY + 24);
+        ctx.moveTo(vx, centerY);
+        ctx.lineTo(vx, centerY + lineH);
+        
+        if (isMatch) {
+          ctx.strokeStyle = '#dc2626'; // Coinciding Red Line
+          ctx.lineWidth = 2.8;
+        } else {
+          ctx.strokeStyle = '#000000';
+          ctx.lineWidth = isMajor ? 1.6 : 1;
         }
-      }
-    }
-
-    // Lock Screw on Top
-    ctx.fillStyle = '#64748b';
-    ctx.fillRect(slideX + 60, mainScaleY - 18, 20, 13);
-    ctx.strokeRect(slideX + 60, mainScaleY - 18, 20, 13);
-
-    // ==========================================
-    // 3. ZOOM INSET VIEW (MAGNIFIED SCALE)
-    // ==========================================
-    const zoomBoxX = 20;
-    const zoomBoxY = 240;
-    const zoomBoxW = w - 40;
-    const zoomBoxH = 125;
-
-    // Zoom Window Frame
-    ctx.fillStyle = '#f8fafc';
-    ctx.fillRect(zoomBoxX, zoomBoxY, zoomBoxW, zoomBoxH);
-    ctx.strokeStyle = '#2563eb';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(zoomBoxX, zoomBoxY, zoomBoxW, zoomBoxH);
-
-    // Label for Zoom Window
-    ctx.fillStyle = '#2563eb';
-    ctx.font = 'bold 12px Arial';
-    ctx.textAlign = 'left';
-    ctx.fillText("🔍 Magnified Vernier Alignment View (ઝૂમ દર્શક)", zoomBoxX + 12, zoomBoxY + 18);
-
-    // Zoom Scale Calculations
-    const zoomPxPerMM = 28; 
-    const zoomCenterY = zoomBoxY + 68;
-    const msr = Math.floor(reading);
-    
-    const zoomOffsetX = zoomBoxX + (zoomBoxW / 2) - (activeDiv * 0.98 * (zoomPxPerMM / 5));
-
-    // Draw Magnified Main Scale
-    const startMM = Math.max(0, msr - 5);
-    const endMM = msr + 15;
-
-    for (let m = startMM; m <= endMM; m++) {
-      let zx = zoomOffsetX + ((m - msr) * zoomPxPerMM);
-      if (zx > zoomBoxX + 5 && zx < zoomBoxX + zoomBoxW - 5) {
-        let isMajor = m % 10 === 0;
-        let isMedium = m % 5 === 0;
-        let lineH = isMajor ? 30 : (isMedium ? 22 : 14);
-
-        ctx.beginPath();
-        ctx.moveTo(zx, zoomCenterY);
-        ctx.lineTo(zx, zoomCenterY - lineH);
-        ctx.strokeStyle = '#000000';
-        ctx.lineWidth = isMajor ? 2.2 : 1.2;
         ctx.stroke();
 
-        if (isMajor || isMedium) {
-          ctx.fillStyle = '#0f172a';
-          ctx.font = 'bold 11px Arial';
-          ctx.textAlign = 'center';
-          ctx.fillText(m, zx, zoomCenterY - 34);
-        }
-      }
-    }
-
-    // Draw Magnified Vernier Scale (Face to Face)
-    for (let vj = 0; vj <= 50; vj++) {
-      let vzx = zoomOffsetX + (vj * 0.98 * (zoomPxPerMM / 5));
-      let isMatch = (vj === activeDiv);
-
-      if (vzx > zoomBoxX + 5 && vzx < zoomBoxX + zoomBoxW - 5) {
-        let isMajor = vj % 5 === 0;
-        let lineH = isMajor ? 28 : 16;
-
-        ctx.beginPath();
-        ctx.moveTo(vzx, zoomCenterY);
-        ctx.lineTo(vzx, zoomCenterY + lineH);
-        ctx.strokeStyle = isMatch ? '#dc2626' : '#000000';
-        ctx.lineWidth = isMatch ? 3 : (isMajor ? 1.8 : 1.1);
-        ctx.stroke();
-
+        // Vernier Digits (0 to 10)
         if (isMajor) {
           ctx.fillStyle = isMatch ? '#dc2626' : '#000000';
           ctx.font = 'bold 11px Arial';
           ctx.textAlign = 'center';
-          ctx.fillText(vj / 5, vzx, zoomCenterY + 42);
+          ctx.fillText(j / 5, vx, centerY + 28);
         }
 
-        // Highlight Red Indicator for Coinciding Line
+        // Matching Arrow Marker
         if (isMatch) {
           ctx.beginPath();
-          ctx.moveTo(vzx, zoomCenterY + lineH + 4);
-          ctx.lineTo(vzx - 5, zoomCenterY + lineH + 12);
-          ctx.lineTo(vzx + 5, zoomCenterY + lineH + 12);
+          ctx.moveTo(vx, centerY + 31);
+          ctx.lineTo(vx - 4, centerY + 37);
+          ctx.lineTo(vx + 4, centerY + 37);
           ctx.closePath();
           ctx.fillStyle = '#dc2626';
           ctx.fill();
-
-          ctx.fillStyle = '#dc2626';
-          ctx.font = 'bold 10px Arial';
-          ctx.textAlign = 'center';
-          ctx.fillText(`Coinciding Line: #${vj}`, vzx, zoomCenterY - 42);
         }
       }
     }
 
-    // Horizontal Contact Line
+    // Zero Arrow Pointer
     ctx.beginPath();
-    ctx.moveTo(zoomBoxX + 10, zoomCenterY);
-    ctx.lineTo(zoomBoxX + zoomBoxW - 10, zoomCenterY);
-    ctx.strokeStyle = '#94a3b8';
-    ctx.lineWidth = 1;
-    ctx.stroke();
+    ctx.moveTo(sliderX, centerY - 2);
+    ctx.lineTo(sliderX - 5, centerY - 10);
+    ctx.lineTo(sliderX + 5, centerY - 10);
+    ctx.closePath();
+    ctx.fillStyle = '#dc2626';
+    ctx.fill();
   }
 
   // Initial Load
