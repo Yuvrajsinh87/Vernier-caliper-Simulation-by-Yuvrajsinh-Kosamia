@@ -3,167 +3,217 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>વર્નિયર કેલિપર સિમ્યુલેટર - Yuvrajsinh Kosamia</title>
+  <title>વર્નિયર કેલિપર પ્રો સિમ્યુલેટર - Y. K. Kosamia</title>
   <style>
     * {
       box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
     }
     body {
-      background-color: #f1f5f9;
-      color: #0f172a;
+      background-color: #0f172a;
+      color: #f8fafc;
       display: flex;
       justify-content: center;
       padding: 16px;
     }
     .container {
-      background: #ffffff;
-      max-width: 850px;
+      background: #1e293b;
+      max-width: 900px;
       width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-      padding: 20px;
-      border: 1px solid #cbd5e1;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      padding: 24px;
+      border: 1px solid #334155;
     }
+    
+    /* પ્રભાવશાળી હેડર અને બ્રાન્ડિંગ */
     .header {
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 10px;
-      margin-bottom: 16px;
+      border-bottom: 2px solid #334155;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
     }
     .header h1 {
-      font-size: 18px;
-      color: #1e293b;
-    }
-    .instructor-badge {
-      background-color: #2563eb;
-      color: #ffffff;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 13px;
+      font-size: 20px;
+      color: #38bdf8;
       font-weight: bold;
     }
+    .instructor-badge {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: bold;
+      border: 1px solid #60a5fa;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      text-align: right;
+    }
+    .instructor-badge span {
+      display: block;
+      color: #fde047; /* ગોલ્ડન કલર */
+      font-size: 11px;
+      font-weight: normal;
+    }
+
     .mode-container {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 16px;
     }
     .mode-btn {
       flex: 1;
-      padding: 10px;
-      border: 2px solid #2563eb;
-      background: #ffffff;
-      color: #2563eb;
+      padding: 12px;
+      border: 2px solid #38bdf8;
+      background: transparent;
+      color: #38bdf8;
       font-weight: bold;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       text-align: center;
+      font-size: 15px;
+      transition: all 0.2s ease;
     }
     .mode-btn.active {
-      background: #2563eb;
-      color: #ffffff;
+      background: #38bdf8;
+      color: #0f172a;
     }
+
     .canvas-container {
-      background: #f8fafc;
-      border: 1px solid #94a3b8;
-      border-radius: 8px;
+      background: #090d16;
+      border: 1px solid #475569;
+      border-radius: 10px;
       margin-bottom: 16px;
       overflow: hidden;
+      position: relative;
     }
     canvas {
       width: 100%;
-      height: 300px;
+      height: 320px;
       display: block;
     }
+
+    /* ઝૂમ વ્યુ વિન્ડો */
+    .zoom-section {
+      background: #0f172a;
+      border: 2px solid #f59e0b;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .zoom-title {
+      font-size: 13px;
+      color: #f59e0b;
+      font-weight: bold;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    canvas#zoomCanvas {
+      width: 100%;
+      height: 140px;
+      background: #ffffff;
+      border-radius: 6px;
+    }
+
     .calc-card {
-      background: #f8fafc;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 14px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 16px;
       margin-bottom: 16px;
     }
     .formula-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 12px;
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
     .read-box {
-      background: #ffffff;
-      padding: 8px;
-      border-radius: 6px;
-      border: 1px solid #e2e8f0;
+      background: #1e293b;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #475569;
     }
     .read-box .label {
       font-size: 11px;
-      color: #64748b;
+      color: #94a3b8;
       font-weight: bold;
     }
     .read-box .val {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
-      color: #1e293b;
+      color: #38bdf8;
       margin-top: 4px;
     }
     .total-box {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 6px;
-      padding: 10px;
+      background: #1e3a8a;
+      border: 1px solid #3b82f6;
+      border-radius: 8px;
+      padding: 12px;
       text-align: center;
       font-size: 18px;
       font-weight: bold;
-      color: #1d4ed8;
+      color: #ffffff;
     }
+
     .test-card {
       display: none;
-      background: #fffbebfb;
-      border: 1px solid #fcd34d;
-      border-radius: 8px;
-      padding: 14px;
+      background: #1e293b;
+      border: 2px solid #f59e0b;
+      border-radius: 10px;
+      padding: 16px;
       margin-bottom: 16px;
       text-align: center;
     }
     .test-input {
-      padding: 8px 12px;
-      font-size: 16px;
-      width: 150px;
-      border: 1px solid #cbd5e1;
+      padding: 10px 14px;
+      font-size: 18px;
+      width: 140px;
+      border: 1px solid #475569;
       border-radius: 6px;
       text-align: center;
+      background: #0f172a;
+      color: #ffffff;
       margin-right: 8px;
     }
     .check-btn {
-      padding: 8px 16px;
-      background: #059669;
+      padding: 10px 20px;
+      background: #10b981;
       color: white;
       border: none;
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
+      font-size: 14px;
+      margin: 4px;
     }
     .feedback {
-      margin-top: 8px;
+      margin-top: 10px;
       font-weight: bold;
-      font-size: 15px;
+      font-size: 16px;
     }
+
     .controls {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
     .slider {
       width: 100%;
-      height: 8px;
-      border-radius: 4px;
-      background: #cbd5e1;
+      height: 10px;
+      border-radius: 5px;
+      background: #475569;
       outline: none;
-      accent-color: #2563eb;
+      accent-color: #38bdf8;
       cursor: pointer;
     }
     .btn-group {
@@ -172,50 +222,64 @@
       gap: 8px;
     }
     .btn {
-      background: #e2e8f0;
-      border: 1px solid #cbd5e1;
-      color: #0f172a;
-      padding: 8px 0;
+      background: #334155;
+      border: 1px solid #475569;
+      color: #f8fafc;
+      padding: 10px 0;
       font-weight: bold;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 14px;
     }
-    .btn:hover { background: #cbd5e1; }
-    .btn-reset { background: #fee2e2; color: #dc2626; border-color: #fecaca; }
+    .btn:hover { background: #475569; }
+    .btn-reset { background: #991b1b; color: #fecaca; border-color: #dc2626; }
+
+    @media (max-width: 600px) {
+      .formula-grid { grid-template-columns: 1fr; }
+      .btn-group { grid-template-columns: repeat(3, 1fr); }
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
+  <!-- પ્રભાવશાળી હેડર -->
   <div class="header">
     <div>
-      <h1>વર્નિયર કેલિપર સિમ્યુલેટર (Stefanelli Style)</h1>
-      <small style="color: #64748b;">Least Count (LC) = 0.02 mm</small>
+      <h1>વર્નિયર કેલિપર પ્રો સિમ્યુલેટર</h1>
+      <small style="color: #94a3b8;">અતિ ચોક્કસાઇ વાળું ડિજિટલ લર્નિંગ ટૂલ | LC = 0.02 mm</small>
     </div>
     <div class="instructor-badge">
-      Created by Yuvrajsinh Kosamia - ITI Ankleshwar
+      Y. K. Kosamia
+      <span>Trade Development Officer (Mechanic Diesel)<br>ITI Ankleshwar</span>
     </div>
   </div>
 
   <div class="mode-container">
-    <button class="mode-btn active" id="btnPractice" onclick="setMode('practice')">📖 Practice Mode</button>
-    <button class="mode-btn" id="btnTest" onclick="setMode('test')">📝 Test Mode</button>
+    <button class="mode-btn active" id="btnPractice" onclick="setMode('practice')">📖 પ્રેક્ટિસ મોડ (Practice)</button>
+    <button class="mode-btn" id="btnTest" onclick="setMode('test')">📝 ટેસ્ટ મોડ (Exam Test)</button>
   </div>
 
+  <!-- મેઇન કેલિપર કેનવાસ -->
   <div class="canvas-container">
     <canvas id="caliperCanvas"></canvas>
   </div>
 
-  <!-- Practice Calculation Display -->
+  <!-- HD મેગ્નિફાઇંગ ઝૂમ વિન્ડો -->
+  <div class="zoom-section">
+    <div class="zoom-title">🔍 HD Zoom View (મેઈન સ્કેલ અને વર્નિયર સ્કેલ મેચિંગ કાપો)</div>
+    <canvas id="zoomCanvas"></canvas>
+  </div>
+
+  <!-- ગણતરી ડિસ્પ્લે -->
   <div class="calc-card" id="practiceDisplay">
     <div class="formula-grid">
       <div class="read-box">
-        <div class="label">1. Main Scale (MSR)</div>
+        <div class="label">1. Main Scale Reading (MSR)</div>
         <div class="val" id="msrTxt">0.00 mm</div>
       </div>
       <div class="read-box">
-        <div class="label">2. Vernier Division (VSD)</div>
+        <div class="label">2. Matching Division (VSD)</div>
         <div class="val" id="vsdTxt">0</div>
       </div>
       <div class="read-box">
@@ -224,25 +288,26 @@
       </div>
     </div>
     <div class="total-box" id="totalTxt">
-      માપ = 0.00 + (0 × 0.02) = 0.00 mm
+      કુલ માપ = 0.00 + (0 × 0.02) = 0.00 mm
     </div>
   </div>
 
-  <!-- Test Mode Box -->
+  <!-- ટેસ્ટ મોડ કંટ્રોલ -->
   <div class="test-card" id="testDisplay">
-    <p style="margin-bottom: 8px; font-weight: bold;">કેલિપરનું સાચું માપ શોધો અને નીચે ટાઈપ કરો:</p>
+    <p style="margin-bottom: 10px; font-weight: bold; color: #fde047;">ઉપરના ઝૂમ વ્યુની મદદથી સાચું માપ શોધી નીચે લખો:</p>
     <input type="number" step="0.02" id="userAns" class="test-input" placeholder="0.00"> mm
-    <button class="check-btn" onclick="checkTestAnswer()">Check Answer</button>
-    <button class="check-btn" style="background:#2563eb;" onclick="generateTestValue()">Next Question</button>
+    <button class="check-btn" onclick="checkTestAnswer()">ચેક કરો (Check)</button>
+    <button class="check-btn" style="background:#2563eb;" onclick="generateTestValue()">નવો પ્રશ્ન (Next)</button>
     <div class="feedback" id="feedbackTxt"></div>
   </div>
 
+  <!-- સ્લાઇડર અને બટન્સ -->
   <div class="controls">
     <input type="range" id="slider" class="slider" min="0" max="50" step="0.02" value="0.00">
     <div class="btn-group">
       <button class="btn" onclick="addValue(-1.00)">-1.00</button>
       <button class="btn" onclick="addValue(-0.02)">-0.02</button>
-      <button class="btn btn-reset" onclick="resetValue()">0.00</button>
+      <button class="btn btn-reset" onclick="resetValue()">0.00 Reset</button>
       <button class="btn" onclick="addValue(0.02)">+0.02</button>
       <button class="btn" onclick="addValue(1.00)">+1.00</button>
     </div>
@@ -252,6 +317,10 @@
 <script>
   const canvas = document.getElementById('caliperCanvas');
   const ctx = canvas.getContext('2d');
+  
+  const zoomCanvas = document.getElementById('zoomCanvas');
+  const zctx = zoomCanvas.getContext('2d');
+
   const slider = document.getElementById('slider');
 
   let reading = 0.00;
@@ -259,9 +328,15 @@
 
   function resizeCanvas() {
     const ratio = window.devicePixelRatio || 2;
+    
     canvas.width = canvas.clientWidth * ratio;
-    canvas.height = 300 * ratio;
+    canvas.height = 320 * ratio;
     ctx.scale(ratio, ratio);
+
+    zoomCanvas.width = zoomCanvas.clientWidth * ratio;
+    zoomCanvas.height = 140 * ratio;
+    zctx.scale(ratio, ratio);
+
     draw();
   }
 
@@ -295,11 +370,17 @@
     let correct = parseFloat(reading.toFixed(2));
     let fb = document.getElementById('feedbackTxt');
     
+    if (isNaN(val)) {
+      fb.style.color = '#ef4444';
+      fb.innerText = "⚠️️ કૃપા કરીને માપ ટાઈપ કરો!";
+      return;
+    }
+
     if (Math.abs(val - correct) < 0.001) {
-      fb.style.color = '#059669';
-      fb.innerText = "✅ એકદમ સાચો જવાબ! (Correct Answer)";
+      fb.style.color = '#10b981';
+      fb.innerText = "🎉 એકદમ સાચો જવાબ! (Perfect Answer)";
     } else {
-      fb.style.color = '#dc2626';
+      fb.style.color = '#ef4444';
       fb.innerText = `❌ ખોટો જવાબ! સાચું માપ ${correct.toFixed(2)} mm છે.`;
     }
   }
@@ -315,7 +396,7 @@
 
     document.getElementById('msrTxt').innerText = msr.toFixed(2) + " mm";
     document.getElementById('vsdTxt').innerText = vsd;
-    document.getElementById('totalTxt').innerText = `માપ = ${msr.toFixed(2)} + (${vsd} × 0.02) = ${reading.toFixed(2)} mm`;
+    document.getElementById('totalTxt').innerText = `કુલ માપ = ${msr.toFixed(2)} + (${vsd} × 0.02) = ${reading.toFixed(2)} mm`;
 
     draw();
   }
@@ -326,156 +407,105 @@
   slider.addEventListener('input', (e) => updateReading(e.target.value));
 
   function draw() {
+    drawMainCaliper();
+    drawZoomView();
+  }
+
+  // 1. મેઈન કેલિપર ડ્રોઇંગ
+  function drawMainCaliper() {
     const w = canvas.clientWidth;
-    const h = 300;
+    const h = 320;
     ctx.clearRect(0, 0, w, h);
 
-    const pxPerMM = 12;
-    const originX = 130;
-    const mainScaleY = 65;
+    const pxPerMM = 9;
+    const originX = 120;
+    const mainScaleY = 70;
     const beamH = 45;
     const centerLineY = mainScaleY + beamH;
 
-    // Metallic Gradients (Stefanelli Style)
     let bodyGrad = ctx.createLinearGradient(0, mainScaleY - 40, 0, centerLineY + 120);
-    bodyGrad.addColorStop(0, '#f1f5f9');
+    bodyGrad.addColorStop(0, '#e2e8f0');
     bodyGrad.addColorStop(0.5, '#ffffff');
-    bodyGrad.addColorStop(1, '#cbd5e1');
+    bodyGrad.addColorStop(1, '#94a3b8');
 
-    let jawDarkGrad = ctx.createLinearGradient(0, centerLineY, 0, centerLineY + 120);
-    jawDarkGrad.addColorStop(0, '#94a3b8');
-    jawDarkGrad.addColorStop(1, '#475569');
-
-    // 1. FIXED BEAM & LEFT JAWS
+    // Fixed Beam
     ctx.fillStyle = bodyGrad;
     ctx.fillRect(10, mainScaleY, w - 20, beamH);
-    ctx.strokeStyle = '#334155';
+    ctx.strokeStyle = '#1e293b';
     ctx.lineWidth = 1.5;
     ctx.strokeRect(10, mainScaleY, w - 20, beamH);
 
-    // Fixed Outer Jaw
+    // Fixed Jaw
     ctx.beginPath();
     ctx.moveTo(originX, centerLineY);
-    ctx.lineTo(originX, centerLineY + 110);
-    ctx.lineTo(originX - 25, centerLineY + 110);
-    ctx.lineTo(originX - 45, centerLineY + 30);
-    ctx.lineTo(originX - 45, mainScaleY - 45);
+    ctx.lineTo(originX, centerLineY + 120);
+    ctx.lineTo(originX - 30, centerLineY + 120);
+    ctx.lineTo(originX - 50, centerLineY + 30);
+    ctx.lineTo(originX - 50, mainScaleY - 45);
     ctx.lineTo(originX - 20, mainScaleY - 45);
     ctx.lineTo(originX - 20, mainScaleY);
     ctx.lineTo(10, mainScaleY);
     ctx.lineTo(10, centerLineY);
     ctx.closePath();
-    ctx.fillStyle = bodyGrad;
     ctx.fill();
     ctx.stroke();
 
-    // Fixed Jaw Tip Accent
-    ctx.fillStyle = jawDarkGrad;
-    ctx.fillRect(originX - 25, centerLineY + 85, 25, 25);
-
-    // Fixed Inner Jaw (Top Sharp Tip)
-    ctx.beginPath();
-    ctx.moveTo(originX - 20, mainScaleY - 45);
-    ctx.lineTo(originX - 10, mainScaleY - 90);
-    ctx.lineTo(originX, mainScaleY - 45);
-    ctx.closePath();
-    ctx.fillStyle = bodyGrad;
-    ctx.fill();
-    ctx.stroke();
-
-    // Branding on Fixed Beam
-    ctx.fillStyle = '#0f172a';
-    ctx.font = 'bold 10px Arial';
-    ctx.textAlign = 'left';
-    ctx.fillText("Created by Yuvrajsinh Kosamia", 15, mainScaleY - 25);
-    ctx.fillText("ITI Ankleshwar", 15, mainScaleY - 12);
-
-    // MAIN SCALE GRADUATIONS (Facing Downward)
+    // Main Scale Graduations
     for (let i = 0; i <= 60; i++) {
       let x = originX + (i * pxPerMM);
       if (x < w - 20) {
         let isMajor = i % 10 === 0;
         let isMedium = i % 5 === 0;
-        let lineH = isMajor ? 24 : (isMedium ? 16 : 10);
+        let lineH = isMajor ? 22 : (isMedium ? 15 : 10);
 
         ctx.beginPath();
         ctx.moveTo(x, centerLineY);
         ctx.lineTo(x, centerLineY - lineH);
         ctx.strokeStyle = '#000000';
-        ctx.lineWidth = isMajor ? 1.8 : 1;
+        ctx.lineWidth = isMajor ? 1.6 : 1;
         ctx.stroke();
 
         if (isMajor) {
           ctx.fillStyle = '#000000';
-          ctx.font = 'bold 13px Arial';
+          ctx.font = 'bold 11px Arial';
           ctx.textAlign = 'center';
-          ctx.fillText(i / 10, x, centerLineY - 28);
+          ctx.fillText(i / 10, x, centerLineY - 25);
         }
       }
     }
 
-    // 2. MOVABLE SLIDER & RIGHT JAWS
+    // Movable Slider
     let slideX = originX + (reading * pxPerMM);
 
-    // Slider Body
     ctx.beginPath();
     ctx.moveTo(slideX - 20, mainScaleY - 5);
     ctx.lineTo(slideX + 180, mainScaleY - 5);
-    ctx.lineTo(slideX + 180, centerLineY + 30);
-    ctx.lineTo(slideX + 25, centerLineY + 30);
-    ctx.lineTo(slideX, centerLineY + 110);
-    ctx.lineTo(slideX - 25, centerLineY + 110);
+    ctx.lineTo(slideX + 180, centerLineY + 35);
+    ctx.lineTo(slideX + 25, centerLineY + 35);
+    ctx.lineTo(slideX, centerLineY + 120);
+    ctx.lineTo(slideX - 30, centerLineY + 120);
     ctx.lineTo(slideX - 20, mainScaleY - 5);
     ctx.closePath();
     ctx.fillStyle = bodyGrad;
     ctx.fill();
-    ctx.strokeStyle = '#334155';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-
-    // Movable Jaw Tip Accent
-    ctx.fillStyle = jawDarkGrad;
-    ctx.fillRect(slideX - 25, centerLineY + 85, 25, 25);
-
-    // Movable Top Inner Jaw
-    ctx.beginPath();
-    ctx.moveTo(slideX + 10, mainScaleY - 45);
-    ctx.lineTo(slideX + 25, mainScaleY - 90);
-    ctx.lineTo(slideX + 40, mainScaleY - 45);
-    ctx.closePath();
-    ctx.fillStyle = bodyGrad;
-    ctx.fill();
-    ctx.stroke();
-
-    // Lock Screw (Top Knurled Screw)
-    ctx.fillStyle = '#64748b';
-    ctx.fillRect(slideX + 60, mainScaleY - 18, 20, 13);
-    ctx.strokeRect(slideX + 60, mainScaleY - 18, 20, 13);
-
-    // Thumb Grip (Bottom Curved Finger Rest Bar)
-    ctx.beginPath();
-    ctx.arc(slideX + 140, centerLineY + 30, 18, 0, Math.PI);
-    ctx.fillStyle = jawDarkGrad;
-    ctx.fill();
     ctx.stroke();
 
     // Vernier Window Frame
-    const winW = 160;
+    const winW = 150;
     const winH = 30;
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(slideX, centerLineY, winW, winH);
-    ctx.strokeStyle = '#000000';
-    ctx.lineWidth = 1.2;
     ctx.strokeRect(slideX, centerLineY, winW, winH);
 
-    // VERNIER SCALE GRADUATIONS (50 divisions = 49 mm)
+    // Vernier Scale Lines
     const activeDiv = Math.round(((reading % 1).toFixed(2)) / 0.02);
+    const vSpacing = (49 / 50) * (pxPerMM / 5);
 
     for (let j = 0; j <= 50; j++) {
-      let vx = slideX + (j * 0.98 * (pxPerMM / 5));
+      let vx = slideX + (j * vSpacing * 5);
       if (vx <= slideX + winW) {
         let isMajor = j % 5 === 0;
-        let lineH = isMajor ? 18 : 10;
+        let lineH = isMajor ? 16 : 10;
         let isMatch = (j === activeDiv);
 
         ctx.beginPath();
@@ -483,19 +513,131 @@
         ctx.lineTo(vx, centerLineY + lineH);
         
         ctx.strokeStyle = isMatch ? '#dc2626' : '#000000';
-        ctx.lineWidth = isMatch ? 2.5 : (isMajor ? 1.4 : 0.9);
+        ctx.lineWidth = isMatch ? 2 : 1;
         ctx.stroke();
+      }
+    }
+  }
 
-        if (isMajor) {
-          ctx.fillStyle = isMatch ? '#dc2626' : '#000000';
-          ctx.font = 'bold 10px Arial';
-          ctx.textAlign = 'center';
-          ctx.fillText(j / 5, vx, centerLineY + 25);
+  // 2. HD મેગ્નિફાઇંગ ઝૂમ વિન્ડો ડ્રોઇંગ (ખાસ સુધારો)
+  function drawZoomView() {
+    const zw = zoomCanvas.clientWidth;
+    const zh = 140;
+    zctx.clearRect(0, 0, zw, zh);
+
+    // ઝૂમ વિન્ડો બેકગ્રાઉન્ડ
+    zctx.fillStyle = '#f8fafc';
+    zctx.fillRect(0, 0, zw, zh);
+
+    const zoomPxPerMM = 28; // ખૂબ જ મોટું મોટું દેખાશે
+    const msr = Math.floor(reading);
+    const activeDiv = Math.round(((reading % 1).toFixed(2)) / 0.02);
+
+    // ઝૂમ સેન્ટર પોઇન્ટ
+    const centerX = zw / 2;
+    const centerY = 70;
+
+    // મેઈન સ્કેલ (ઉપરનો ભાગ)
+    zctx.fillStyle = '#e2e8f0';
+    zctx.fillRect(0, 0, zw, centerY);
+    zctx.strokeStyle = '#475569';
+    zctx.lineWidth = 2;
+    zctx.beginPath();
+    zctx.moveTo(0, centerY);
+    zctx.lineTo(zw, centerY);
+    zctx.stroke();
+
+    // વર્નિયર સ્કેલ (નીચેનો ભાગ)
+    zctx.fillStyle = '#ffffff';
+    zctx.fillRect(0, centerY, zw, zh - centerY);
+
+    // ઝૂમ મેઈન સ્કેલ ડ્રો કરો
+    const startMM = msr - 5;
+    const endMM = msr + 10;
+
+    for (let m = startMM; m <= endMM; m++) {
+      if (m < 0) continue;
+      // વર્નિયરના 0 ને સેન્ટરમાં રાખવાની ગણતરી
+      let mx = centerX + (m - reading) * zoomPxPerMM;
+
+      if (mx >= 0 && mx <= zw) {
+        let isMajor = m % 10 === 0;
+        let isMedium = m % 5 === 0;
+        let lineH = isMajor ? 35 : (isMedium ? 25 : 18);
+
+        // MSR હાઇલાઇટ (ઝીરો કયો કાપો વટાવી ગયો?)
+        let isPassedMSR = (m === msr);
+
+        zctx.beginPath();
+        zctx.moveTo(mx, centerY);
+        zctx.lineTo(mx, centerY - lineH);
+        zctx.strokeStyle = isPassedMSR ? '#2563eb' : '#000000';
+        zctx.lineWidth = isPassedMSR ? 3.5 : (isMajor ? 2.5 : 1.5);
+        zctx.stroke();
+
+        // MSR ટેક્સ્ટ
+        zctx.fillStyle = isPassedMSR ? '#2563eb' : '#000000';
+        zctx.font = isPassedMSR ? 'bold 15px Arial' : '13px Arial';
+        zctx.textAlign = 'center';
+        zctx.fillText(m, mx, centerY - lineH - 5);
+
+        // MSR ઈન્ડિકેટર (એરો)
+        if (isPassedMSR) {
+          zctx.fillStyle = '#2563eb';
+          zctx.font = 'bold 12px Arial';
+          zctx.fillText("⬇ MSR", mx, centerY - lineH - 22);
+        }
+      }
+    }
+
+    // ઝૂમ વર્નિયર સ્કેલ ડ્રો કરો
+    const vSpacingZoom = (49 / 50) * zoomPxPerMM;
+
+    for (let j = 0; j <= 50; j++) {
+      let vx = centerX + (j * (vSpacingZoom / 5)) - ((reading - msr) * zoomPxPerMM);
+
+      if (vx >= -20 && vx <= zw + 20) {
+        let isMajor = j % 5 === 0;
+        let lineH = isMajor ? 32 : 20;
+        let isMatch = (j === activeDiv);
+
+        zctx.beginPath();
+        zctx.moveTo(vx, centerY);
+        zctx.lineTo(vx, centerY + lineH);
+        
+        zctx.strokeStyle = isMatch ? '#dc2626' : '#000000';
+        zctx.lineWidth = isMatch ? 4 : (isMajor ? 2 : 1.2);
+        zctx.stroke();
+
+        if (isMajor || isMatch) {
+          zctx.fillStyle = isMatch ? '#dc2626' : '#000000';
+          zctx.font = isMatch ? 'bold 14px Arial' : '11px Arial';
+          zctx.textAlign = 'center';
+          zctx.fillText(j / 5, vx, centerY + lineH + 15);
+        }
+
+        // બંધબેસતો (Matching) કાપો - ગાઇડ લાઇન અને એરો
+        if (isMatch) {
+          // લાલ મેચિંગ વર્ટીકલ લાઇન
+          zctx.beginPath();
+          zctx.moveTo(vx, 0);
+          zctx.lineTo(vx, zh);
+          zctx.strokeStyle = 'rgba(220, 38, 38, 0.4)';
+          zctx.lineWidth = 3;
+          zctx.setLineDash([4, 4]);
+          zctx.stroke();
+          zctx.setLineDash([]); // રીસેટ લાઇન ડેશ
+
+          // રેડ પોઇન્ટર ટેક્સ્ટ
+          zctx.fillStyle = '#dc2626';
+          zctx.font = 'bold 12px Arial';
+          zctx.fillText("MATCH (VSD)", vx, centerY + lineH + 30);
         }
       }
     }
   }
 
+  // સ્ટાર્ટઅપ લોડ
   setTimeout(() => {
     resizeCanvas();
     updateReading(0.00);
