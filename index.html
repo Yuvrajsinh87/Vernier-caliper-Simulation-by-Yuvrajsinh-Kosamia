@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>વર્નિયર કેલિપર પ્રો સિમ્યુલેટર - Y. K. Kosamia</title>
+  <title>વર્નિયર કેલિપર પ્રો સિમ્યુલેટર</title>
   <style>
     * {
       box-sizing: border-box;
@@ -28,7 +28,7 @@
       border: 1px solid #334155;
     }
     
-    /* પ્રભાવશાળી હેડર અને બ્રાન્ડિંગ */
+    /* હેડર અને નવું બ્રાન્ડિંગ */
     .header {
       border-bottom: 2px solid #334155;
       padding-bottom: 10px;
@@ -54,12 +54,7 @@
       border: 1px solid #60a5fa;
       box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
       text-align: right;
-    }
-    .instructor-badge span {
-      display: block;
-      color: #fde047;
-      font-size: 10px;
-      font-weight: normal;
+      line-height: 1.4;
     }
 
     .mode-container {
@@ -85,7 +80,7 @@
       color: #0f172a;
     }
 
-    /* કેનિપર અને ઝૂમ વ્યુ સિક્વેન્સ */
+    /* કેલિપર અને ઝૂમ વ્યુ */
     .canvas-container {
       background: #090d16;
       border: 1px solid #475569;
@@ -95,7 +90,7 @@
     }
     canvas#caliperCanvas {
       width: 100%;
-      height: 260px;
+      height: 240px;
       display: block;
     }
 
@@ -106,20 +101,18 @@
       border-radius: 10px;
       padding: 10px;
       margin-bottom: 12px;
-      position: relative;
     }
     .zoom-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     .zoom-title {
       font-size: 12px;
       color: #f59e0b;
       font-weight: bold;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
     .toggle-highlight-btn {
       background: #334155;
@@ -133,12 +126,12 @@
     }
     canvas#zoomCanvas {
       width: 100%;
-      height: 150px;
+      height: 160px;
       background: #ffffff;
       border-radius: 6px;
     }
 
-    /* સ્લાઇડર અને કંટ્રોલ્સ (હવે ઝૂમ વ્યુની તરત જ નીચે) */
+    /* સ્લાઇડર અને કંટ્રોલ્સ */
     .controls {
       background: #0f172a;
       border: 1px solid #334155;
@@ -176,7 +169,7 @@
     .btn:hover { background: #475569; }
     .btn-reset { background: #991b1b; color: #fecaca; border-color: #dc2626; }
 
-    /* ગણતરી ડિસ્પ્લે કાર્ડ્સ */
+    /* રીડિંગ બોક્સ */
     .calc-card {
       background: #0f172a;
       border: 1px solid #334155;
@@ -264,15 +257,15 @@
 <body>
 
 <div class="container">
-  <!-- પ્રભાવશાળી હેડર -->
+  <!-- અદ્યતન હેડર -->
   <div class="header">
     <div>
       <h1>વર્નિયર કેલિપર પ્રો સિમ્યુલેટર</h1>
-      <small style="color: #94a3b8;">અતિ ચોક્કસાઇ વાળું ડિજિટલ લર્નિંગ ટૂલ | LC = 0.02 mm</small>
+      <small style="color: #94a3b8;">અતિ ચોક્કસાઇ વાળા સ્કેલ સાથે | LC = 0.02 mm</small>
     </div>
     <div class="instructor-badge">
-      Y. K. Kosamia
-      <span>Trade Development Officer (Mechanic Diesel)<br>ITI Ankleshwar</span>
+      Created by Yuvrajsinh Kosamia<br>
+      (Mechanic Diesel) ITI Ankleshwar
     </div>
   </div>
 
@@ -281,15 +274,15 @@
     <button class="mode-btn" id="btnTest" onclick="setMode('test')">📝 ટેસ્ટ મોડ (Exam Test)</button>
   </div>
 
-  <!-- 1. મેઇન કેલિપર કેનવાસ -->
+  <!-- ૧. મેઇન કેલિપર -->
   <div class="canvas-container">
     <canvas id="caliperCanvas"></canvas>
   </div>
 
-  <!-- 2. HD મેગ્નિફાઇંગ ઝૂમ વિન્ડો -->
+  <!-- ૨. કન્જેસ્ટેડ-ફ્રી ક્લિયર ઝૂમ વિન્ડો -->
   <div class="zoom-section">
     <div class="zoom-header">
-      <div class="zoom-title">🔍 Ultra-Clear Zoom View (મેઈન સ્કેલ અને વર્નિયર સ્કેલ)</div>
+      <div class="zoom-title">🔍 Ultra-Clear Zoom View</div>
       <button class="toggle-highlight-btn" id="toggleHighlightBtn" onclick="toggleHighlight()">
         💡 Red Match Indicator: ON
       </button>
@@ -297,7 +290,7 @@
     <canvas id="zoomCanvas"></canvas>
   </div>
 
-  <!-- 3. સ્લાઇડર અને કંટ્રોલ્સ (અહીં ઉપર ખસેડવામાં આવ્યા છે) -->
+  <!-- ૩. સ્લાઇડર અને બટનો -->
   <div class="controls">
     <input type="range" id="slider" class="slider" min="0" max="50" step="0.02" value="0.00">
     <div class="btn-group">
@@ -309,7 +302,7 @@
     </div>
   </div>
 
-  <!-- 4. ગણતરી ડિસ્પ્લે (પ્રેક્ટિસ) -->
+  <!-- ૪. પ્રેક્ટિસ ડિસ્પ્લે -->
   <div class="calc-card" id="practiceDisplay">
     <div class="formula-grid">
       <div class="read-box">
@@ -330,7 +323,7 @@
     </div>
   </div>
 
-  <!-- 5. ટેસ્ટ મોડ કંટ્રોલ -->
+  <!-- ૫. ટેસ્ટ ડિસ્પ્લે -->
   <div class="test-card" id="testDisplay">
     <p style="margin-bottom: 8px; font-weight: bold; color: #fde047;">ઉપરના ઝૂમ વ્યુમાંથી એકઝેટ મેચ થતો કાપો શોધી સાચું માપ લખો:</p>
     <input type="number" step="0.02" id="userAns" class="test-input" placeholder="0.00"> mm
@@ -357,11 +350,11 @@
     const ratio = window.devicePixelRatio || 2;
     
     canvas.width = canvas.clientWidth * ratio;
-    canvas.height = 260 * ratio;
+    canvas.height = 240 * ratio;
     ctx.scale(ratio, ratio);
 
     zoomCanvas.width = zoomCanvas.clientWidth * ratio;
-    zoomCanvas.height = 150 * ratio;
+    zoomCanvas.height = 160 * ratio;
     zctx.scale(ratio, ratio);
 
     draw();
@@ -370,7 +363,7 @@
   window.addEventListener('resize', resizeCanvas);
 
   function toggleHighlight() {
-    if (currentMode === 'test') return; // ટેસ્ટ મોડમાં ઓટો ડિસેબલ
+    if (currentMode === 'test') return;
     showMatchIndicator = !showMatchIndicator;
     const btn = document.getElementById('toggleHighlightBtn');
     btn.innerText = showMatchIndicator ? "💡 Red Match Indicator: ON" : "💡 Red Match Indicator: OFF";
@@ -395,8 +388,8 @@
     } else {
       document.getElementById('practiceDisplay').style.display = 'none';
       document.getElementById('testDisplay').style.display = 'block';
-      toggleBtn.style.display = 'none'; // ટેસ્ટ મોડમાં ઓટો હાઈડ
-      showMatchIndicator = false; // ટેસ્ટ મોડમાં લાલ ઇન્ડિકેટર બંધ
+      toggleBtn.style.display = 'none';
+      showMatchIndicator = false;
       generateTestValue();
     }
   }
@@ -454,24 +447,24 @@
     drawZoomView();
   }
 
-  // 1. મુખ્ય કેલિપર આકૃતિ
+  // ૧. મેઇન કેલિપર ડ્રોઇંગ
   function drawMainCaliper() {
     const w = canvas.clientWidth;
-    const h = 260;
+    const h = 240;
     ctx.clearRect(0, 0, w, h);
 
-    const pxPerMM = 8;
-    const originX = 110;
-    const mainScaleY = 60;
-    const beamH = 40;
+    const pxPerMM = 7.5;
+    const originX = 100;
+    const mainScaleY = 50;
+    const beamH = 38;
     const centerLineY = mainScaleY + beamH;
 
-    let bodyGrad = ctx.createLinearGradient(0, mainScaleY - 30, 0, centerLineY + 100);
+    let bodyGrad = ctx.createLinearGradient(0, mainScaleY - 30, 0, centerLineY + 90);
     bodyGrad.addColorStop(0, '#cbd5e1');
     bodyGrad.addColorStop(0.5, '#ffffff');
     bodyGrad.addColorStop(1, '#94a3b8');
 
-    // Main Fixed Beam
+    // Main Beam
     ctx.fillStyle = bodyGrad;
     ctx.fillRect(10, mainScaleY, w - 20, beamH);
     ctx.strokeStyle = '#1e293b';
@@ -481,12 +474,12 @@
     // Fixed Jaw
     ctx.beginPath();
     ctx.moveTo(originX, centerLineY);
-    ctx.lineTo(originX, centerLineY + 100);
-    ctx.lineTo(originX - 25, centerLineY + 100);
-    ctx.lineTo(originX - 45, centerLineY + 25);
-    ctx.lineTo(originX - 45, mainScaleY - 35);
-    ctx.lineTo(originX - 20, mainScaleY - 35);
-    ctx.lineTo(originX - 20, mainScaleY);
+    ctx.lineTo(originX, centerLineY + 90);
+    ctx.lineTo(originX - 22, centerLineY + 90);
+    ctx.lineTo(originX - 40, centerLineY + 20);
+    ctx.lineTo(originX - 40, mainScaleY - 30);
+    ctx.lineTo(originX - 18, mainScaleY - 30);
+    ctx.lineTo(originX - 18, mainScaleY);
     ctx.lineTo(10, mainScaleY);
     ctx.lineTo(10, centerLineY);
     ctx.closePath();
@@ -499,7 +492,7 @@
       if (x < w - 20) {
         let isMajor = i % 10 === 0;
         let isMedium = i % 5 === 0;
-        let lineH = isMajor ? 20 : (isMedium ? 14 : 9);
+        let lineH = isMajor ? 18 : (isMedium ? 12 : 8);
 
         ctx.beginPath();
         ctx.moveTo(x, centerLineY);
@@ -512,7 +505,7 @@
           ctx.fillStyle = '#000000';
           ctx.font = 'bold 10px Arial';
           ctx.textAlign = 'center';
-          ctx.fillText(i / 10, x, centerLineY - 23);
+          ctx.fillText(i / 10, x, centerLineY - 21);
         }
       }
     }
@@ -521,21 +514,21 @@
     let slideX = originX + (reading * pxPerMM);
 
     ctx.beginPath();
-    ctx.moveTo(slideX - 20, mainScaleY - 5);
-    ctx.lineTo(slideX + 160, mainScaleY - 5);
-    ctx.lineTo(slideX + 160, centerLineY + 30);
-    ctx.lineTo(slideX + 25, centerLineY + 30);
-    ctx.lineTo(slideX, centerLineY + 100);
-    ctx.lineTo(slideX - 25, centerLineY + 100);
-    ctx.lineTo(slideX - 20, mainScaleY - 5);
+    ctx.moveTo(slideX - 18, mainScaleY - 5);
+    ctx.lineTo(slideX + 150, mainScaleY - 5);
+    ctx.lineTo(slideX + 150, centerLineY + 25);
+    ctx.lineTo(slideX + 22, centerLineY + 25);
+    ctx.lineTo(slideX, centerLineY + 90);
+    ctx.lineTo(slideX - 22, centerLineY + 90);
+    ctx.lineTo(slideX - 18, mainScaleY - 5);
     ctx.closePath();
     ctx.fillStyle = bodyGrad;
     ctx.fill();
     ctx.stroke();
 
-    // Vernier Window Frame
-    const winW = 140;
-    const winH = 26;
+    // Vernier Frame Window
+    const winW = 135;
+    const winH = 24;
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(slideX, centerLineY, winW, winH);
     ctx.strokeRect(slideX, centerLineY, winW, winH);
@@ -548,7 +541,7 @@
       let vx = slideX + (j * vSpacing * 5);
       if (vx <= slideX + winW) {
         let isMajor = j % 5 === 0;
-        let lineH = isMajor ? 14 : 8;
+        let lineH = isMajor ? 12 : 7;
         let isMatch = (j === activeDiv);
 
         ctx.beginPath();
@@ -562,113 +555,113 @@
     }
   }
 
-  // 2. અતિ-ચોક્કસ ઓટો-કેન્દ્રિત ઝૂમ વિન્ડો (High Precision Zoom View)
+  // ૨. સુધારેલું અને એકદમ સ્પષ્ટ ઝૂમ વ્યુ (Clean Non-Congested Zoom View)
   function drawZoomView() {
     const zw = zoomCanvas.clientWidth;
-    const zh = 150;
+    const zh = 160;
     zctx.clearRect(0, 0, zw, zh);
 
-    // વિન્ડોનું મધ્યબિંદુ
-    const centerY = 75;
+    const centerY = 80;
 
-    // વર્નિયર સ્કેલના 50 કાપા હંમેશા ઝૂમ સ્ક્રીનમાં ફિટ રહે તેવું ઓટો-સ્કેલિંગ
-    const totalVernierLengthPx = zw * 0.82; // સ્ક્રીન વિડ્થના 82% માં વર્નિયર ફિટ થશે
-    const vDivisionPx = totalVernierLengthPx / 50; // દરેક વર્નિયર વિભાગનું પિક્સલ અંતર
-    const zoomPxPerMM = vDivisionPx / (49 / 50); // તે મુજબ મેઈન સ્કેલ 1mm નું પિક્સલ અંતર
+    // વર્નિયર સ્કેલ ફિટ વિડ્થ (પૂરતી જગ્યા સાથે)
+    const totalVernierPx = zw * 0.85;
+    const vDivPx = totalVernierPx / 50; // વર્નિયર ડિવિઝન વચ્ચે પિક્સલ
+    const msMMpx = vDivPx / 0.98;       // મેઈન સ્કેલ 1mm ની પિક્સલ સ્પેસિંગ
 
-    // વર્નિયર સ્કેલ 0 નો એક્ઝેટ પ્રારંભ બિંદુ (જેથી 0 થી 50 સુધીના કાપા ક્યારેય સ્ક્રીન બહાર ન જાય)
-    const vernierZeroX = (zw - totalVernierLengthPx) / 2;
+    const vZeroX = (zw - totalVernierPx) / 2;
 
     const msr = Math.floor(reading);
     const activeDiv = Math.round(((reading % 1).toFixed(2)) / 0.02);
 
-    // પૃષ્ઠભૂમિ - મેઈન સ્કેલ (ઉપર) અને વર્નિયર સ્કેલ (નીચે)
-    zctx.fillStyle = '#f1f5f9';
+    // બેકગ્રાઉન્ડ
+    zctx.fillStyle = '#f8fafc';
     zctx.fillRect(0, 0, zw, centerY);
     zctx.fillStyle = '#ffffff';
     zctx.fillRect(0, centerY, zw, zh - centerY);
 
-    // મધ્યની પાર્ટીશન લાઈન
+    // સેન્ટર ડિવાઇડર લાઇન
     zctx.beginPath();
     zctx.moveTo(0, centerY);
     zctx.lineTo(zw, centerY);
-    zctx.strokeStyle = '#0f172a';
+    zctx.strokeStyle = '#1e293b';
     zctx.lineWidth = 1.5;
     zctx.stroke();
 
-    // A. મેઈન સ્કેલ ડ્રોઇંગ (ઉપરનો સ્કેલ - કાપા નીચેની તરફ આવે છે)
-    const minMM = msr - 2;
-    const maxMM = msr + 12;
+    // A. મેઈન સ્કેલ ડ્રોઇંગ (ઉપરનો સ્કેલ)
+    // ફક્ત દેખાતા લિમિટેડ કાપા જ દોરવા જેથી ભીડ ન થાય
+    const startMM = msr - 3;
+    const endMM = msr + 12;
 
-    for (let m = minMM; m <= maxMM; m++) {
+    for (let m = startMM; m <= endMM; m++) {
       if (m < 0) continue;
-      // કાપાનું પિક્સલ લોકેશન (વર્નિયર 0 અને ચાલુ રીડિંગના આધારે)
-      let mx = vernierZeroX + (m - reading) * zoomPxPerMM;
 
-      if (mx >= 5 && mx <= zw - 5) {
+      let mx = vZeroX + (m - reading) * msMMpx;
+
+      if (mx >= 10 && mx <= zw - 10) {
         let isMajor = m % 10 === 0;
         let isMedium = m % 5 === 0;
-        let lineH = isMajor ? 40 : (isMedium ? 28 : 20);
-        let isPassedMSR = (m === msr);
+        let lineH = isMajor ? 35 : (isMedium ? 24 : 16);
+        let isMSR = (m === msr);
 
+        // કાપાની લાઇન
         zctx.beginPath();
         zctx.moveTo(mx, centerY);
         zctx.lineTo(mx, centerY - lineH);
-        
-        // લાઈનની એકદમ તીક્ષ્ણતા (Sharpen Line)
-        zctx.strokeStyle = (isPassedMSR && showMatchIndicator) ? '#2563eb' : '#000000';
-        zctx.lineWidth = (isPassedMSR && showMatchIndicator) ? 3 : (isMajor ? 2.2 : 1.4);
+        zctx.strokeStyle = (isMSR && showMatchIndicator) ? '#2563eb' : '#0f172a';
+        zctx.lineWidth = (isMSR && showMatchIndicator) ? 2.5 : (isMajor ? 2 : 1.2);
         zctx.stroke();
 
-        // આંકડા (Numbers)
-        zctx.fillStyle = (isPassedMSR && showMatchIndicator) ? '#2563eb' : '#0f172a';
-        zctx.font = isPassedMSR ? 'bold 14px Arial' : 'bold 12px Arial';
-        zctx.textAlign = 'center';
-        zctx.fillText(m, mx, centerY - lineH - 4);
+        // મુખ્ય આંકડા (ફક્ત 5 અને 10 ના ગુણાંકમાં જેથી કન્જેસ્ટેડ ન થાય)
+        if (isMedium || isMajor) {
+          zctx.fillStyle = (isMSR && showMatchIndicator) ? '#2563eb' : '#334155';
+          zctx.font = 'bold 12px Arial';
+          zctx.textAlign = 'center';
+          zctx.fillText(m, mx, centerY - lineH - 5);
+        }
 
-        if (isPassedMSR && showMatchIndicator) {
+        // MSR સંકેત ફક્ત પ્રેક્ટિસ મોડમાં
+        if (isMSR && showMatchIndicator) {
           zctx.fillStyle = '#2563eb';
           zctx.font = 'bold 11px Arial';
-          zctx.fillText("⬇ MSR", mx, centerY - lineH - 18);
+          zctx.fillText("MSR", mx, centerY - lineH - 20);
         }
       }
     }
 
-    // B. વર્નિયર સ્કેલ ડ્રોઇંગ (નીચેનો સ્કેલ - કાપા ઉપરની તરફ જાય છે)
+    // B. વર્નિયર સ્કેલ ડ્રોઇંગ (નીચેનો સ્કેલ)
     for (let j = 0; j <= 50; j++) {
-      let vx = vernierZeroX + (j * vDivisionPx);
+      let vx = vZeroX + (j * vDivPx);
 
-      if (vx >= 0 && vx <= zw) {
+      if (vx >= 5 && vx <= zw - 5) {
         let isMajor = j % 5 === 0;
-        let lineH = isMajor ? 38 : (j % 1 === 0 ? 22 : 16);
+        let lineH = isMajor ? 32 : 18;
         let isMatch = (j === activeDiv);
 
         zctx.beginPath();
         zctx.moveTo(vx, centerY);
         zctx.lineTo(vx, centerY + lineH);
         
-        // જો મેચિંગ ઇન્ડિકેટર ચાલુ હોય તો લાલ, નહિતર ક્લાસિક બ્લેક ડાર્ક લાઇન
         zctx.strokeStyle = (isMatch && showMatchIndicator) ? '#dc2626' : '#000000';
-        zctx.lineWidth = (isMatch && showMatchIndicator) ? 3.5 : (isMajor ? 2.2 : 1.4);
+        zctx.lineWidth = (isMatch && showMatchIndicator) ? 2.8 : (isMajor ? 1.8 : 1.1);
         zctx.stroke();
 
         if (isMajor) {
           zctx.fillStyle = (isMatch && showMatchIndicator) ? '#dc2626' : '#0f172a';
-          zctx.font = 'bold 12px Arial';
+          zctx.font = 'bold 11px Arial';
           zctx.textAlign = 'center';
           zctx.fillText(j / 5, vx, centerY + lineH + 14);
         }
 
-        // જો મેચિંગ ઇન્ડિકેટર ON હોય ત્યારે જ લાલ ગાઇડ લાઇન દેખાડવી
+        // મેચિંગ લાલ ઇન્ડિકેટર ગાઇડ
         if (isMatch && showMatchIndicator) {
           zctx.beginPath();
           zctx.moveTo(vx, 0);
           zctx.lineTo(vx, zh);
-          zctx.strokeStyle = 'rgba(220, 38, 38, 0.35)';
-          zctx.lineWidth = 2.5;
+          zctx.strokeStyle = 'rgba(220, 38, 38, 0.4)';
+          zctx.lineWidth = 2;
           zctx.setLineDash([4, 4]);
           zctx.stroke();
-          zctx.setLineDash([]); // રીસેટ લાઇન ડેશ
+          zctx.setLineDash([]);
 
           zctx.fillStyle = '#dc2626';
           zctx.font = 'bold 11px Arial';
@@ -678,7 +671,7 @@
     }
   }
 
-  // લોડિંગ
+  // શરૂઆત
   setTimeout(() => {
     resizeCanvas();
     updateReading(0.00);
