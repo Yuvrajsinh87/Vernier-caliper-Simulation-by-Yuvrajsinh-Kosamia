@@ -28,7 +28,7 @@
       border: 1px solid #334155;
     }
     
-    /* હેડર અને નવું બ્રાન્ડિંગ */
+    /* હેડર */
     .header {
       border-bottom: 2px solid #334155;
       padding-bottom: 10px;
@@ -90,11 +90,11 @@
     }
     canvas#caliperCanvas {
       width: 100%;
-      height: 240px;
+      height: 230px;
       display: block;
     }
 
-    /* ઝૂમ વિન્ડો */
+    /* પર્ફેક્ટ ઝૂમ વિન્ડો */
     .zoom-section {
       background: #0f172a;
       border: 2px solid #f59e0b;
@@ -126,7 +126,7 @@
     }
     canvas#zoomCanvas {
       width: 100%;
-      height: 160px;
+      height: 170px;
       background: #ffffff;
       border-radius: 6px;
     }
@@ -257,11 +257,11 @@
 <body>
 
 <div class="container">
-  <!-- અદ્યતન હેડર -->
+  <!-- હેડર -->
   <div class="header">
     <div>
       <h1>વર્નિયર કેલિપર પ્રો સિમ્યુલેટર</h1>
-      <small style="color: #94a3b8;">અતિ ચોક્કસાઇ વાળા સ્કેલ સાથે | LC = 0.02 mm</small>
+      <small style="color: #94a3b8;">હાઈ-ચોકસાઈ ઝૂમ સ્કેલ સાથે | LC = 0.02 mm</small>
     </div>
     <div class="instructor-badge">
       Created by Yuvrajsinh Kosamia<br>
@@ -279,7 +279,7 @@
     <canvas id="caliperCanvas"></canvas>
   </div>
 
-  <!-- ૨. કન્જેસ્ટેડ-ફ્રી ક્લિયર ઝૂમ વિન્ડો -->
+  <!-- ૨. પરફેક્ટ સામસામે કાપા વાળું ઝૂમ વિન્ડો -->
   <div class="zoom-section">
     <div class="zoom-header">
       <div class="zoom-title">🔍 Ultra-Clear Zoom View</div>
@@ -350,11 +350,11 @@
     const ratio = window.devicePixelRatio || 2;
     
     canvas.width = canvas.clientWidth * ratio;
-    canvas.height = 240 * ratio;
+    canvas.height = 230 * ratio;
     ctx.scale(ratio, ratio);
 
     zoomCanvas.width = zoomCanvas.clientWidth * ratio;
-    zoomCanvas.height = 160 * ratio;
+    zoomCanvas.height = 170 * ratio;
     zctx.scale(ratio, ratio);
 
     draw();
@@ -447,15 +447,15 @@
     drawZoomView();
   }
 
-  // ૧. મેઇન કેલિપર ડ્રોઇંગ
+  // ૧. મુખ્ય કેલિપર
   function drawMainCaliper() {
     const w = canvas.clientWidth;
-    const h = 240;
+    const h = 230;
     ctx.clearRect(0, 0, w, h);
 
     const pxPerMM = 7.5;
     const originX = 100;
-    const mainScaleY = 50;
+    const mainScaleY = 45;
     const beamH = 38;
     const centerLineY = mainScaleY + beamH;
 
@@ -555,18 +555,18 @@
     }
   }
 
-  // ૨. સુધારેલું અને એકદમ સ્પષ્ટ ઝૂમ વ્યુ (Clean Non-Congested Zoom View)
+  // ૨. સંપૂર્ણપણે સુધારેલું એક્ઝેટ મેચિંગ ઝૂમ વ્યુ (Perfect Coincident Zoom View)
   function drawZoomView() {
     const zw = zoomCanvas.clientWidth;
-    const zh = 160;
+    const zh = 170;
     zctx.clearRect(0, 0, zw, zh);
 
-    const centerY = 80;
+    const centerY = 78;
 
-    // વર્નિયર સ્કેલ ફિટ વિડ્થ (પૂરતી જગ્યા સાથે)
-    const totalVernierPx = zw * 0.85;
-    const vDivPx = totalVernierPx / 50; // વર્નિયર ડિવિઝન વચ્ચે પિક્સલ
-    const msMMpx = vDivPx / 0.98;       // મેઈન સ્કેલ 1mm ની પિક્સલ સ્પેસિંગ
+    // વર્નિયર સ્કેલ ફિટ વિડ્થ (૦ થી ૫૦ કમ્પ્લીટ ફિટ)
+    const totalVernierPx = zw * 0.84;
+    const vDivPx = totalVernierPx / 50;  // ૧ વર્નિયર ડિવિઝનની પિક્સલ લંબાઈ (0.98 mm)
+    const msMMpx = vDivPx / 0.98;        // ૧ mm મેઈન સ્કેલની પિક્સલ લંબાઈ (1.00 mm)
 
     const vZeroX = (zw - totalVernierPx) / 2;
 
@@ -579,66 +579,65 @@
     zctx.fillStyle = '#ffffff';
     zctx.fillRect(0, centerY, zw, zh - centerY);
 
-    // સેન્ટર ડિવાઇડર લાઇન
+    // સેન્ટર લાઇન (જ્યાં બંને કાપા સામસામે મળે છે)
     zctx.beginPath();
     zctx.moveTo(0, centerY);
     zctx.lineTo(zw, centerY);
-    zctx.strokeStyle = '#1e293b';
+    zctx.strokeStyle = '#0f172a';
     zctx.lineWidth = 1.5;
     zctx.stroke();
 
-    // A. મેઈન સ્કેલ ડ્રોઇંગ (ઉપરનો સ્કેલ)
-    // ફક્ત દેખાતા લિમિટેડ કાપા જ દોરવા જેથી ભીડ ન થાય
-    const startMM = msr - 3;
-    const endMM = msr + 12;
+    // A. સંપૂર્ણ મેઈન સ્કેલ ડ્રોઇંગ (વર્નિયરની આખી લંબાઈ સુધી સતત કાપા)
+    const startMM = msr - 4;
+    const endMM = msr + 55; // આખી સ્કેલ કવર થઈ જાય તેટલા કાપા
 
     for (let m = startMM; m <= endMM; m++) {
       if (m < 0) continue;
 
       let mx = vZeroX + (m - reading) * msMMpx;
 
-      if (mx >= 10 && mx <= zw - 10) {
+      // વિન્ડોમાં દેખાતા કાપા જ રેન્ડર કરવા
+      if (mx >= 5 && mx <= zw - 5) {
         let isMajor = m % 10 === 0;
         let isMedium = m % 5 === 0;
-        let lineH = isMajor ? 35 : (isMedium ? 24 : 16);
+        let lineH = isMajor ? 32 : (isMedium ? 22 : 15);
         let isMSR = (m === msr);
 
-        // કાપાની લાઇન
         zctx.beginPath();
-        zctx.moveTo(mx, centerY);
+        zctx.moveTo(mx, centerY - 1); // મધ્ય રેખાની બિલકુલ અડીને
         zctx.lineTo(mx, centerY - lineH);
         zctx.strokeStyle = (isMSR && showMatchIndicator) ? '#2563eb' : '#0f172a';
         zctx.lineWidth = (isMSR && showMatchIndicator) ? 2.5 : (isMajor ? 2 : 1.2);
         zctx.stroke();
 
-        // મુખ્ય આંકડા (ફક્ત 5 અને 10 ના ગુણાંકમાં જેથી કન્જેસ્ટેડ ન થાય)
+        // ફક્ત ૫ ના ગુણાંકમાં નંબર લખવા જેથી ઓવરલેપ ન થાય
         if (isMedium || isMajor) {
           zctx.fillStyle = (isMSR && showMatchIndicator) ? '#2563eb' : '#334155';
-          zctx.font = 'bold 12px Arial';
+          zctx.font = 'bold 11px Arial';
           zctx.textAlign = 'center';
-          zctx.fillText(m, mx, centerY - lineH - 5);
+          zctx.fillText(m, mx, centerY - lineH - 4);
         }
 
-        // MSR સંકેત ફક્ત પ્રેક્ટિસ મોડમાં
+        // MSR ટેક્સ્ટ સંકેત
         if (isMSR && showMatchIndicator) {
           zctx.fillStyle = '#2563eb';
-          zctx.font = 'bold 11px Arial';
-          zctx.fillText("MSR", mx, centerY - lineH - 20);
+          zctx.font = 'bold 10px Arial';
+          zctx.fillText("MSR", mx, centerY - lineH - 17);
         }
       }
     }
 
-    // B. વર્નિયર સ્કેલ ડ્રોઇંગ (નીચેનો સ્કેલ)
+    // B. વર્નિયર સ્કેલ ડ્રોઇંગ (૦ થી ૫૦ કાપા)
     for (let j = 0; j <= 50; j++) {
       let vx = vZeroX + (j * vDivPx);
 
-      if (vx >= 5 && vx <= zw - 5) {
+      if (vx >= 2 && vx <= zw - 2) {
         let isMajor = j % 5 === 0;
-        let lineH = isMajor ? 32 : 18;
+        let lineH = isMajor ? 30 : 16;
         let isMatch = (j === activeDiv);
 
         zctx.beginPath();
-        zctx.moveTo(vx, centerY);
+        zctx.moveTo(vx, centerY + 1); // મધ્ય રેખાની બિલકુલ અડીને
         zctx.lineTo(vx, centerY + lineH);
         
         zctx.strokeStyle = (isMatch && showMatchIndicator) ? '#dc2626' : '#000000';
@@ -649,29 +648,30 @@
           zctx.fillStyle = (isMatch && showMatchIndicator) ? '#dc2626' : '#0f172a';
           zctx.font = 'bold 11px Arial';
           zctx.textAlign = 'center';
-          zctx.fillText(j / 5, vx, centerY + lineH + 14);
+          zctx.fillText(j / 5, vx, centerY + lineH + 13);
         }
 
-        // મેચિંગ લાલ ઇન્ડિકેટર ગાઇડ
+        // મેચિંગ લાલ લાઇન અને નીચે સુંદર "MATCH" ઇન્ડિકેટર (ઓવરલેપિંગ વગર)
         if (isMatch && showMatchIndicator) {
           zctx.beginPath();
           zctx.moveTo(vx, 0);
           zctx.lineTo(vx, zh);
-          zctx.strokeStyle = 'rgba(220, 38, 38, 0.4)';
+          zctx.strokeStyle = 'rgba(220, 38, 38, 0.45)';
           zctx.lineWidth = 2;
-          zctx.setLineDash([4, 4]);
+          zctx.setLineDash([3, 3]);
           zctx.stroke();
           zctx.setLineDash([]);
 
+          // "MATCH" શબ્દ નંબરની નીચે બિલકુલ સ્પષ્ટ દેખાશે
           zctx.fillStyle = '#dc2626';
-          zctx.font = 'bold 11px Arial';
-          zctx.fillText("MATCH", vx, centerY + lineH + 28);
+          zctx.font = 'bold 10px Arial';
+          zctx.fillText("MATCH", vx, centerY + lineH + 26);
         }
       }
     }
   }
 
-  // શરૂઆત
+  // લોડિંગ
   setTimeout(() => {
     resizeCanvas();
     updateReading(0.00);
