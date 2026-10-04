@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>વર્નિયર કેલિપર સિમ્યુલેટર (HD)</title>
+  <title>વર્નિયર કેલિપર HD સિમ્યુલેટર (Precision Scale)</title>
   <style>
     * {
       box-sizing: border-box;
@@ -19,7 +19,7 @@
     }
     .container {
       background: #ffffff;
-      max-width: 500px;
+      max-width: 520px;
       width: 100%;
       border-radius: 16px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.08);
@@ -71,18 +71,19 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .simulator-card {
-      border: 1px solid #cbd5e1;
+      border: 2px solid #94a3b8;
       border-radius: 12px;
-      padding: 6px;
-      background: #ffffff;
+      padding: 4px;
+      background: #0f172a;
       margin-bottom: 12px;
       overflow: hidden;
     }
     canvas {
       width: 100%;
-      height: 220px;
+      height: 240px;
       display: block;
       border-radius: 8px;
+      background: #ffffff;
     }
     .result-box {
       background: #eff6ff;
@@ -269,8 +270,8 @@
   </div>
 
   <div class="title-section">
-    <h1>વર્નિયર કેલિપર (0–150 mm)</h1>
-    <p>ચોક્કસ સ્કેલ વાંચન અને પ્રાયોગિક સિમ્યુલેટર (LC: 0.02 mm)</p>
+    <h1>વર્નિયર કેલિપર (HD Precision)</h1>
+    <p>ઝૂમ-ઇન હાઇ-ડેફિનેશન સ્કેલ (LC: 0.02 mm)</p>
   </div>
 
   <div class="nav-tabs">
@@ -297,7 +298,7 @@
     </div>
 
     <div class="slider-container">
-      <input type="range" id="caliperSlider" class="slider" min="0" max="70" step="0.02" value="0.00">
+      <input type="range" id="caliperSlider" class="slider" min="0" max="40" step="0.02" value="0.00">
     </div>
 
     <button class="reset-btn" onclick="resetValue()">↺ 0.00 સેટ કરો</button>
@@ -306,11 +307,11 @@
       <div class="formula-title">📊 રીડિંગ ગણતરી (Formula):</div>
       
       <div class="formula-row">
-        <span class="label"><strong class="dot-blue">■</strong> Main Scale Reading (MSR - પૂર્ણાંક mm):</span>
+        <span class="label"><strong class="dot-blue">■</strong> Main Scale (ઝીરો ૦ પહેલાનો કાપો):</span>
         <span id="msrVal">0.00 mm</span>
       </div>
       <div class="formula-row">
-        <span class="label"><strong class="dot-red">■</strong> Vernier Scale Reading (VSR - ડિવિઝન × 0.02):</span>
+        <span class="label"><strong class="dot-red">■</strong> Vernier Scale (કાપો × 0.02 mm):</span>
         <span id="vsrVal">0.00 mm</span>
       </div>
 
@@ -374,7 +375,7 @@
 
   function resizeCanvas() {
     const width = canvas.clientWidth;
-    const height = 220;
+    const height = 240;
     const ratio = window.devicePixelRatio || 2;
 
     canvas.width = width * ratio;
@@ -386,7 +387,7 @@
   window.addEventListener('resize', resizeCanvas);
 
   function updateReading(val) {
-    currentValue = Math.min(Math.max(parseFloat(val), 0), 70);
+    currentValue = Math.min(Math.max(parseFloat(val), 0), 40);
     slider.value = currentValue.toFixed(2);
 
     const msr = Math.floor(currentValue);
@@ -396,14 +397,14 @@
     // શીખો મોડ અપડેટ
     document.getElementById('totalReading').innerText = currentValue.toFixed(2) + " mm";
     document.getElementById('msrVal').innerText = msr.toFixed(2) + " mm";
-    document.getElementById('vsrVal').innerText = `${vsr.toFixed(2)} mm (${vernierDivision} div × 0.02)`;
+    document.getElementById('vsrVal').innerText = `${vsr.toFixed(2)} mm (કાપો #${vernierDivision})`;
     
     document.getElementById('sumFormula').innerText = 
       `સરવાળો (MSR + VSR): ${msr} + ${vsr.toFixed(2)} = ${currentValue.toFixed(2)} mm`;
 
     // ટેસ્ટ મોડ હિડન ગણતરી અપડેટ
     document.getElementById('testMsrVal').innerText = msr.toFixed(2) + " mm";
-    document.getElementById('testVsrVal').innerText = `${vsr.toFixed(2)} mm (${vernierDivision} div × 0.02)`;
+    document.getElementById('testVsrVal').innerText = `${vsr.toFixed(2)} mm (કાપો #${vernierDivision})`;
     document.getElementById('testSumFormula').innerText = 
       `સરવાળો: ${msr} + ${vsr.toFixed(2)} = ${currentValue.toFixed(2)} mm`;
 
@@ -445,8 +446,8 @@
   }
 
   function generateNewQuestion() {
-    // 0.00 થી 50.00 mm વચ્ચે રેન્ડમ અંક generate કરવો (0.02 ના ગુણાંકમાં)
-    targetValue = (Math.floor(Math.random() * 2500) * 0.02);
+    // 0.00 થી 35.00 mm વચ્ચે રેન્ડમ અંક generate કરવો
+    targetValue = (Math.floor(Math.random() * 1750) * 0.02);
     updateReading(targetValue);
 
     document.getElementById('userAnswer').value = '';
@@ -488,36 +489,37 @@
     document.getElementById('testFormulaCard').style.display = 'block';
   }
 
-  // Vernier Caliper Canvas Rendering Engine
+  // High-Precision Vernier Rendering Engine
   function drawCaliper() {
     const w = canvas.clientWidth;
-    const h = 220;
+    const h = 240;
 
     ctx.clearRect(0, 0, w, h);
 
-    const pxPerMM = 5; // Visual scale factor
-    const mainScaleY = 60;
-    const mainScaleHeight = 50;
-    const fixedJawX = 50;
+    // Zoomed Scale Parameters for Ultimate Clarity
+    const pxPerMM = 11; // 11px per mm (Ultra Clear Spacing)
+    const fixedJawX = 45;
+    const mainScaleY = 50;
+    const mainScaleHeight = 65;
 
-    // 1. MAIN BEAM (Metallic Body)
+    // 1. MAIN BEAM (Stainless Steel Finish)
     let beamGrad = ctx.createLinearGradient(0, mainScaleY, 0, mainScaleY + mainScaleHeight);
-    beamGrad.addColorStop(0, '#94a3b8');
-    beamGrad.addColorStop(0.2, '#f8fafc');
-    beamGrad.addColorStop(0.8, '#cbd5e1');
-    beamGrad.addColorStop(1, '#64748b');
+    beamGrad.addColorStop(0, '#cbd5e1');
+    beamGrad.addColorStop(0.3, '#f8fafc');
+    beamGrad.addColorStop(0.7, '#e2e8f0');
+    beamGrad.addColorStop(1, '#94a3b8');
 
     ctx.fillStyle = beamGrad;
     ctx.fillRect(10, mainScaleY, w - 20, mainScaleHeight);
     ctx.strokeStyle = '#475569';
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = 2;
     ctx.strokeRect(10, mainScaleY, w - 20, mainScaleHeight);
 
-    // FIXED JAW (Left Side)
+    // FIXED JAW (Left Jaw)
     ctx.beginPath();
     ctx.moveTo(fixedJawX, mainScaleY + mainScaleHeight);
-    ctx.lineTo(fixedJawX, mainScaleY + mainScaleHeight + 70);
-    ctx.quadraticCurveTo(fixedJawX - 15, mainScaleY + mainScaleHeight + 90, fixedJawX - 35, mainScaleY + mainScaleHeight + 60);
+    ctx.lineTo(fixedJawX, mainScaleY + mainScaleHeight + 90);
+    ctx.quadraticCurveTo(fixedJawX - 15, mainScaleY + mainScaleHeight + 110, fixedJawX - 35, mainScaleY + mainScaleHeight + 70);
     ctx.lineTo(fixedJawX - 35, mainScaleY);
     ctx.lineTo(10, mainScaleY);
     ctx.lineTo(10, mainScaleY + mainScaleHeight);
@@ -526,97 +528,127 @@
     ctx.fill();
     ctx.stroke();
 
-    // MAIN SCALE GRADUATIONS (mm lines)
-    const msrCount = 80;
-    for (let i = 0; i <= msrCount; i++) {
+    // 2. MAIN SCALE GRADUATIONS (Heavy Black Lines)
+    const startViewMM = 0;
+    const endViewMM = 45;
+
+    for (let i = startViewMM; i <= endViewMM; i++) {
       let x = fixedJawX + (i * pxPerMM);
-      if (x < w - 20) {
+      if (x <= w - 15) {
         let isMajor = i % 10 === 0;
         let isMedium = i % 5 === 0;
 
         ctx.beginPath();
         ctx.moveTo(x, mainScaleY + mainScaleHeight);
-        ctx.lineTo(x, mainScaleY + mainScaleHeight - (isMajor ? 22 : (isMedium ? 15 : 9)));
+        ctx.lineTo(x, mainScaleY + mainScaleHeight - (isMajor ? 28 : (isMedium ? 20 : 12)));
         ctx.strokeStyle = '#000000';
-        ctx.lineWidth = isMajor ? 1.8 : 1;
+        ctx.lineWidth = isMajor ? 2.2 : (isMedium ? 1.6 : 1.2);
         ctx.stroke();
 
-        if (isMajor && i <= 70) {
-          ctx.fillStyle = '#000000';
-          ctx.font = '900 11px Arial, sans-serif';
+        // Main Scale Numbers (Clear Bold)
+        if (isMajor) {
+          ctx.fillStyle = '#0f172a';
+          ctx.font = '900 13px Arial, sans-serif';
           ctx.textAlign = 'center';
-          ctx.fillText(i, x, mainScaleY + 18);
+          ctx.fillText(i, x, mainScaleY + 22);
         }
       }
     }
 
-    // 2. SLIDING VERNIER SCALE (Movable Jaw)
+    // 3. MOVABLE VERNIER SLIDER
     let vernierX = fixedJawX + (currentValue * pxPerMM);
 
-    let sliderGrad = ctx.createLinearGradient(0, mainScaleY - 10, 0, mainScaleY + mainScaleHeight + 80);
-    sliderGrad.addColorStop(0, '#e2e8f0');
-    sliderGrad.addColorStop(0.3, '#ffffff');
-    sliderGrad.addColorStop(0.7, '#cbd5e1');
+    let sliderGrad = ctx.createLinearGradient(0, mainScaleY - 15, 0, mainScaleY + mainScaleHeight + 100);
+    sliderGrad.addColorStop(0, '#f1f5f9');
+    sliderGrad.addColorStop(0.2, '#ffffff');
+    sliderGrad.addColorStop(0.8, '#cbd5e1');
     sliderGrad.addColorStop(1, '#64748b');
 
-    // Movable Jaw Shape
+    // Movable Jaw & Vernier Body Shape
     ctx.beginPath();
-    ctx.moveTo(vernierX, mainScaleY - 8);
-    ctx.lineTo(vernierX + 130, mainScaleY - 8);
-    ctx.lineTo(vernierX + 130, mainScaleY + mainScaleHeight + 20);
-    ctx.lineTo(vernierX + 35, mainScaleY + mainScaleHeight + 20);
-    ctx.lineTo(vernierX, mainScaleY + mainScaleHeight + 80);
-    ctx.quadraticCurveTo(vernierX - 10, mainScaleY + mainScaleHeight + 85, vernierX - 10, mainScaleY + mainScaleHeight + 70);
-    ctx.lineTo(vernierX - 10, mainScaleY - 8);
+    ctx.moveTo(vernierX - 15, mainScaleY - 12);
+    ctx.lineTo(vernierX + 270, mainScaleY - 12);
+    ctx.lineTo(vernierX + 270, mainScaleY + mainScaleHeight + 15);
+    ctx.lineTo(vernierX + 45, mainScaleY + mainScaleHeight + 15);
+    ctx.lineTo(vernierX, mainScaleY + mainScaleHeight + 90);
+    ctx.quadraticCurveTo(vernierX - 10, mainScaleY + mainScaleHeight + 95, vernierX - 15, mainScaleY + mainScaleHeight + 70);
+    ctx.lineTo(vernierX - 15, mainScaleY - 12);
     ctx.closePath();
     ctx.fillStyle = sliderGrad;
     ctx.fill();
-    ctx.strokeStyle = '#334155';
-    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = '#1e293b';
+    ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Vernier Window (Cutout)
-    ctx.fillStyle = '#f8fafc';
-    ctx.fillRect(vernierX + 10, mainScaleY + 10, 110, mainScaleHeight - 20);
-    ctx.strokeRect(vernierX + 10, mainScaleY + 10, 110, mainScaleHeight - 20);
+    // Vernier Scale Cutout Window
+    const winWidth = 245;
+    const winHeight = 36;
+    const winY = mainScaleY + mainScaleHeight - winHeight;
 
-    // VERNIER DIVISIONS (50 divisions = 49 mm on main scale)
-    // 1 Vernier Div = 0.98 mm in real = 0.98 * pxPerMM
-    const vernierDivisions = 50;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(vernierX, winY, winWidth, winHeight);
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(vernierX, winY, winWidth, winHeight);
+
+    // 4. VERNIER SCALE GRADUATIONS (50 divisions = 49 mm)
+    // 1 Vernier Division = 0.98 mm -> 0.98 * pxPerMM
     const vDivPx = 0.98 * pxPerMM;
-
     const currentVsrDiv = Math.round(((currentValue % 1).toFixed(2)) / 0.02);
 
-    for (let j = 0; j <= vernierDivisions; j++) {
+    for (let j = 0; j <= 50; j++) {
       let vx = vernierX + (j * vDivPx);
       let isMajor = j % 5 === 0;
-
-      // Highlight Coinciding Line
       let isCoinciding = (j === currentVsrDiv);
 
-      ctx.beginPath();
-      ctx.moveTo(vx, mainScaleY + mainScaleHeight);
-      ctx.lineTo(vx, mainScaleY + mainScaleHeight + (isMajor ? 16 : 10));
-      ctx.strokeStyle = isCoinciding ? '#dc2626' : '#000000';
-      ctx.lineWidth = isCoinciding ? 2.5 : (isMajor ? 1.5 : 1);
-      ctx.stroke();
+      if (vx <= vernierX + winWidth) {
+        ctx.beginPath();
+        ctx.moveTo(vx, winY);
+        ctx.lineTo(vx, winY + (isMajor ? 20 : 12));
 
-      if (isMajor) {
-        ctx.fillStyle = isCoinciding ? '#dc2626' : '#000000';
-        ctx.font = '900 10px Arial, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(j / 5, vx, mainScaleY + mainScaleHeight + 28);
+        if (isCoinciding) {
+          ctx.strokeStyle = '#dc2626'; // Red Highlight
+          ctx.lineWidth = 3;
+        } else {
+          ctx.strokeStyle = '#000000';
+          ctx.lineWidth = isMajor ? 1.8 : 1.1;
+        }
+        ctx.stroke();
+
+        // Vernier Scale Numbers (0, 1, 2, ... 10)
+        if (isMajor) {
+          ctx.fillStyle = isCoinciding ? '#dc2626' : '#000000';
+          ctx.font = '900 11px Arial, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(j / 5, vx, winY + 30);
+        }
+
+        // Highlight matching box above coinciding line
+        if (isCoinciding) {
+          ctx.fillStyle = '#dc2626';
+          ctx.fillRect(vx - 12, winY - 18, 24, 15);
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 10px Arial';
+          ctx.textAlign = 'center';
+          ctx.fillText('#' + j, vx, winY - 7);
+        }
       }
     }
 
-    // Vernier Zero Indicator Red Arrow
+    // 5. RED ZERO ARROW (MSR Indicator)
     ctx.beginPath();
-    ctx.moveTo(vernierX, mainScaleY + mainScaleHeight + 2);
-    ctx.lineTo(vernierX - 4, mainScaleY + mainScaleHeight + 8);
-    ctx.lineTo(vernierX + 4, mainScaleY + mainScaleHeight + 8);
+    ctx.moveTo(vernierX, winY - 2);
+    ctx.lineTo(vernierX - 5, winY - 10);
+    ctx.lineTo(vernierX + 5, winY - 10);
     ctx.closePath();
     ctx.fillStyle = '#dc2626';
     ctx.fill();
+
+    // Text Label on Zero Indicator
+    ctx.fillStyle = '#dc2626';
+    ctx.font = 'bold 11px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('▼ 0', vernierX, winY - 13);
   }
 
   // Setup Canvas on Load
