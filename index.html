@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>વર્નિયર કેલિપર સિમ્યુલેટર (HD)</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      padding: 12px;
+    }
+    .container {
+      background: #ffffff;
+      max-width: 500px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      padding: 16px;
+    }
+    .header {
+      background-color: #0f172a;
+      color: #ffffff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .title-section {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .title-section h1 {
+      font-size: 20px;
+      color: #0f172a;
+      font-weight: 800;
+    }
+    .title-section p {
+      font-size: 12px;
+      color: #64748b;
+    }
+    .nav-tabs {
+      display: flex;
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 4px;
+      margin-bottom: 12px;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 8px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #64748b;
+      user-select: none;
+    }
+    .tab.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .simulator-card {
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 6px;
+      background: #ffffff;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    canvas {
+      width: 100%;
+      height: 220px;
+      display: block;
+      border-radius: 8px;
+    }
+    .result-box {
+      background: #eff6ff;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .result-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .result-value {
+      font-size: 26px;
+      font-weight: 800;
+      color: #1d4ed8;
+    }
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 10px 0;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn:active {
+      background: #e2e8f0;
+    }
+    .slider-container {
+      margin-bottom: 12px;
+    }
+    .slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: #cbd5e1;
+      outline: none;
+      accent-color: #2563eb;
+    }
+    .reset-btn {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-block;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .formula-card {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+    }
+    .formula-title {
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .formula-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      margin-bottom: 6px;
+      color: #475569;
+    }
+    .formula-row span.label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dot-blue { color: #2563eb; }
+    .dot-red { color: #ef4444; }
+    .calc-sum {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed #cbd5e1;
+      font-weight: 700;
+      color: #1d4ed8;
+      font-size: 13px;
+    }
+
+    /* 🎯 ટેસ્ટ મોડ કસ્ટમ સ્ટાઈલ્સ */
+    .test-card {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .test-input-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .test-input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      outline: none;
+      text-align: center;
+    }
+    .test-input:focus {
+      border-color: #2563eb;
+    }
+    .btn-submit {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0 16px;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .btn-submit:active {
+      background: #1d4ed8;
+    }
+    .test-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-action {
+      flex: 1;
+      padding: 8px;
+      font-weight: 700;
+      font-size: 12px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      cursor: pointer;
+    }
+    .feedback-msg {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      display: none;
+    }
+    .feedback-correct {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+    .feedback-wrong {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    ⚙️ Created by: Yuvrajsinh Kosamia | ITI Ankleshwar
+  </div>
+
+  <div class="title-section">
+    <h1>વર્નિયર કેલિપર (0–150 mm)</h1>
+    <p>ચોક્કસ સ્કેલ વાંચન અને પ્રાયોગિક સિમ્યુલેટર (LC: 0.02 mm)</p>
+  </div>
+
+  <div class="nav-tabs">
+    <div class="tab active" id="tabLearn" onclick="switchMode('learn')">📘 શીખો</div>
+    <div class="tab" id="tabTest" onclick="switchMode('test')">🎯 ટેસ્ટ લેબ</div>
+  </div>
+
+  <div class="simulator-card">
+    <canvas id="caliperCanvas"></canvas>
+  </div>
+
+  <!-- શીખો (Learn) મોડના કંટ્રોલ્સ -->
+  <div id="learnControls">
+    <div class="result-box">
+      <span class="result-title">કુલ રીડિંગ:</span>
+      <span class="result-value" id="totalReading">0.00 mm</span>
+    </div>
+
+    <div class="btn-grid">
+      <button class="btn" onclick="adjustValue(-1.00)">-1.00</button>
+      <button class="btn" onclick="adjustValue(-0.02)">-0.02</button>
+      <button class="btn" onclick="adjustValue(0.02)">+0.02</button>
+      <button class="btn" onclick="adjustValue(1.00)">+1.00</button>
+    </div>
+
+    <div class="slider-container">
+      <input type="range" id="caliperSlider" class="slider" min="0" max="70" step="0.02" value="0.00">
+    </div>
+
+    <button class="reset-btn" onclick="resetValue()">↺ 0.00 સેટ કરો</button>
+
+    <div class="formula-card">
+      <div class="formula-title">📊 રીડિંગ ગણતરી (Formula):</div>
+      
+      <div class="formula-row">
+        <span class="label"><strong class="dot-blue">■</strong> Main Scale Reading (MSR - પૂર્ણાંક mm):</span>
+        <span id="msrVal">0.00 mm</span>
+      </div>
+      <div class="formula-row">
+        <span class="label"><strong class="dot-red">■</strong> Vernier Scale Reading (VSR - ડિવિઝન × 0.02):</span>
+        <span id="vsrVal">0.00 mm</span>
+      </div>
+
+      <div class="calc-sum" id="sumFormula">
+        સરવાળો (MSR + VSR): 0 + 0.00 = 0.00 mm
+      </div>
+    </div>
+  </div>
+
+  <!-- ટેસ્ટ લેબ (Test Lab) મોડના કંટ્રોલ્સ -->
+  <div id="testControls" style="display: none;">
+    <div class="test-card">
+      <div class="formula-title" style="text-align: center; margin-bottom: 10px;">
+        🔍 ઉપર દર્શાવેલ વર્નિયર કેલિપરનું રીડિંગ શોધો:
+      </div>
+      
+      <div class="test-input-group">
+        <input type="number" id="userAnswer" class="test-input" placeholder="0.00" step="0.02">
+        <button class="btn-submit" onclick="checkAnswer()">તપાસો</button>
+      </div>
+
+      <div class="test-actions">
+        <button class="btn-action" onclick="generateNewQuestion()">🎲 નવો પ્રશ્ન</button>
+        <button class="btn-action" onclick="revealAnswer()">👁 જવાબ બતાવો</button>
+      </div>
+
+      <div id="feedbackMsg" class="feedback-msg"></div>
+    </div>
+
+    <div id="testFormulaCard" class="formula-card" style="display: none;">
+      <div class="formula-title">📊 રીડિંગ ગણતરી (Formula):</div>
+      
+      <div class="formula-row">
+        <span class="label"><strong class="dot-blue">■</strong> Main Scale Reading (MSR):</span>
+        <span id="testMsrVal">0.00 mm</span>
+      </div>
+      <div class="formula-row">
+        <span class="label"><strong class="dot-red">■</strong> Vernier Scale Reading (VSR):</span>
+        <span id="testVsrVal">0.00 mm</span>
+      </div>
+
+      <div class="calc-sum" id="testSumFormula">
+        સરવાળો: 0.00 mm
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    ITI Ankleshwar | Mechanical Engineering Workshop Simulator
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById('caliperCanvas');
+  const ctx = canvas.getContext('2d');
+  const slider = document.getElementById('caliperSlider');
+
+  let currentValue = 0.00;
+  let currentMode = 'learn';
+  let targetValue = 0.00;
+
+  function resizeCanvas() {
+    const width = canvas.clientWidth;
+    const height = 220;
+    const ratio = window.devicePixelRatio || 2;
+
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    ctx.scale(ratio, ratio);
+    drawCaliper();
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+
+  function updateReading(val) {
+    currentValue = Math.min(Math.max(parseFloat(val), 0), 70);
+    slider.value = currentValue.toFixed(2);
+
+    const msr = Math.floor(currentValue);
+    const vsr = parseFloat((currentValue - msr).toFixed(2));
+    const vernierDivision = Math.round(vsr / 0.02);
+
+    // શીખો મોડ અપડેટ
+    document.getElementById('totalReading').innerText = currentValue.toFixed(2) + " mm";
+    document.getElementById('msrVal').innerText = msr.toFixed(2) + " mm";
+    document.getElementById('vsrVal').innerText = `${vsr.toFixed(2)} mm (${vernierDivision} div × 0.02)`;
+    
+    document.getElementById('sumFormula').innerText = 
+      `સરવાળો (MSR + VSR): ${msr} + ${vsr.toFixed(2)} = ${currentValue.toFixed(2)} mm`;
+
+    // ટેસ્ટ મોડ હિડન ગણતરી અપડેટ
+    document.getElementById('testMsrVal').innerText = msr.toFixed(2) + " mm";
+    document.getElementById('testVsrVal').innerText = `${vsr.toFixed(2)} mm (${vernierDivision} div × 0.02)`;
+    document.getElementById('testSumFormula').innerText = 
+      `સરવાળો: ${msr} + ${vsr.toFixed(2)} = ${currentValue.toFixed(2)} mm`;
+
+    drawCaliper();
+  }
+
+  function adjustValue(delta) {
+    updateReading(currentValue + delta);
+  }
+
+  function resetValue() {
+    updateReading(0.00);
+  }
+
+  slider.addEventListener('input', (e) => {
+    updateReading(e.target.value);
+  });
+
+  function switchMode(mode) {
+    currentMode = mode;
+    const learnTab = document.getElementById('tabLearn');
+    const testTab = document.getElementById('tabTest');
+    const learnControls = document.getElementById('learnControls');
+    const testControls = document.getElementById('testControls');
+
+    if (mode === 'learn') {
+      learnTab.classList.add('active');
+      testTab.classList.remove('active');
+      learnControls.style.display = 'block';
+      testControls.style.display = 'none';
+      updateReading(currentValue);
+    } else {
+      testTab.classList.add('active');
+      learnTab.classList.remove('active');
+      learnControls.style.display = 'none';
+      testControls.style.display = 'block';
+      generateNewQuestion();
+    }
+  }
+
+  function generateNewQuestion() {
+    // 0.00 થી 50.00 mm વચ્ચે રેન્ડમ અંક generate કરવો (0.02 ના ગુણાંકમાં)
+    targetValue = (Math.floor(Math.random() * 2500) * 0.02);
+    updateReading(targetValue);
+
+    document.getElementById('userAnswer').value = '';
+    document.getElementById('testFormulaCard').style.display = 'none';
+    
+    const feedback = document.getElementById('feedbackMsg');
+    feedback.style.display = 'none';
+    feedback.className = 'feedback-msg';
+  }
+
+  function checkAnswer() {
+    const userVal = parseFloat(document.getElementById('userAnswer').value);
+    const feedback = document.getElementById('feedbackMsg');
+
+    if (isNaN(userVal)) {
+      feedback.innerText = "⚠️ કૃપા કરીને તમારો જવાબ દાખલ કરો!";
+      feedback.className = "feedback-msg feedback-wrong";
+      feedback.style.display = "block";
+      return;
+    }
+
+    if (Math.abs(userVal - targetValue) < 0.01) {
+      feedback.innerText = "🎉 એકદમ સાચો જવાબ! ખૂબ સરસ.";
+      feedback.className = "feedback-msg feedback-correct";
+      document.getElementById('testFormulaCard').style.display = 'block';
+    } else {
+      feedback.innerText = `❌ ખોટો જવાબ! ફરી પ્રયાસ કરો.`;
+      feedback.className = "feedback-msg feedback-wrong";
+    }
+    feedback.style.display = "block";
+  }
+
+  function revealAnswer() {
+    document.getElementById('userAnswer').value = targetValue.toFixed(2);
+    const feedback = document.getElementById('feedbackMsg');
+    feedback.innerText = `💡 સાચો જવાબ ${targetValue.toFixed(2)} mm છે.`;
+    feedback.className = "feedback-msg feedback-correct";
+    feedback.style.display = "block";
+    document.getElementById('testFormulaCard').style.display = 'block';
+  }
+
+  // Vernier Caliper Canvas Rendering Engine
+  function drawCaliper() {
+    const w = canvas.clientWidth;
+    const h = 220;
+
+    ctx.clearRect(0, 0, w, h);
+
+    const pxPerMM = 5; // Visual scale factor
+    const mainScaleY = 60;
+    const mainScaleHeight = 50;
+    const fixedJawX = 50;
+
+    // 1. MAIN BEAM (Metallic Body)
+    let beamGrad = ctx.createLinearGradient(0, mainScaleY, 0, mainScaleY + mainScaleHeight);
+    beamGrad.addColorStop(0, '#94a3b8');
+    beamGrad.addColorStop(0.2, '#f8fafc');
+    beamGrad.addColorStop(0.8, '#cbd5e1');
+    beamGrad.addColorStop(1, '#64748b');
+
+    ctx.fillStyle = beamGrad;
+    ctx.fillRect(10, mainScaleY, w - 20, mainScaleHeight);
+    ctx.strokeStyle = '#475569';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(10, mainScaleY, w - 20, mainScaleHeight);
+
+    // FIXED JAW (Left Side)
+    ctx.beginPath();
+    ctx.moveTo(fixedJawX, mainScaleY + mainScaleHeight);
+    ctx.lineTo(fixedJawX, mainScaleY + mainScaleHeight + 70);
+    ctx.quadraticCurveTo(fixedJawX - 15, mainScaleY + mainScaleHeight + 90, fixedJawX - 35, mainScaleY + mainScaleHeight + 60);
+    ctx.lineTo(fixedJawX - 35, mainScaleY);
+    ctx.lineTo(10, mainScaleY);
+    ctx.lineTo(10, mainScaleY + mainScaleHeight);
+    ctx.closePath();
+    ctx.fillStyle = beamGrad;
+    ctx.fill();
+    ctx.stroke();
+
+    // MAIN SCALE GRADUATIONS (mm lines)
+    const msrCount = 80;
+    for (let i = 0; i <= msrCount; i++) {
+      let x = fixedJawX + (i * pxPerMM);
+      if (x < w - 20) {
+        let isMajor = i % 10 === 0;
+        let isMedium = i % 5 === 0;
+
+        ctx.beginPath();
+        ctx.moveTo(x, mainScaleY + mainScaleHeight);
+        ctx.lineTo(x, mainScaleY + mainScaleHeight - (isMajor ? 22 : (isMedium ? 15 : 9)));
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = isMajor ? 1.8 : 1;
+        ctx.stroke();
+
+        if (isMajor && i <= 70) {
+          ctx.fillStyle = '#000000';
+          ctx.font = '900 11px Arial, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(i, x, mainScaleY + 18);
+        }
+      }
+    }
+
+    // 2. SLIDING VERNIER SCALE (Movable Jaw)
+    let vernierX = fixedJawX + (currentValue * pxPerMM);
+
+    let sliderGrad = ctx.createLinearGradient(0, mainScaleY - 10, 0, mainScaleY + mainScaleHeight + 80);
+    sliderGrad.addColorStop(0, '#e2e8f0');
+    sliderGrad.addColorStop(0.3, '#ffffff');
+    sliderGrad.addColorStop(0.7, '#cbd5e1');
+    sliderGrad.addColorStop(1, '#64748b');
+
+    // Movable Jaw Shape
+    ctx.beginPath();
+    ctx.moveTo(vernierX, mainScaleY - 8);
+    ctx.lineTo(vernierX + 130, mainScaleY - 8);
+    ctx.lineTo(vernierX + 130, mainScaleY + mainScaleHeight + 20);
+    ctx.lineTo(vernierX + 35, mainScaleY + mainScaleHeight + 20);
+    ctx.lineTo(vernierX, mainScaleY + mainScaleHeight + 80);
+    ctx.quadraticCurveTo(vernierX - 10, mainScaleY + mainScaleHeight + 85, vernierX - 10, mainScaleY + mainScaleHeight + 70);
+    ctx.lineTo(vernierX - 10, mainScaleY - 8);
+    ctx.closePath();
+    ctx.fillStyle = sliderGrad;
+    ctx.fill();
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Vernier Window (Cutout)
+    ctx.fillStyle = '#f8fafc';
+    ctx.fillRect(vernierX + 10, mainScaleY + 10, 110, mainScaleHeight - 20);
+    ctx.strokeRect(vernierX + 10, mainScaleY + 10, 110, mainScaleHeight - 20);
+
+    // VERNIER DIVISIONS (50 divisions = 49 mm on main scale)
+    // 1 Vernier Div = 0.98 mm in real = 0.98 * pxPerMM
+    const vernierDivisions = 50;
+    const vDivPx = 0.98 * pxPerMM;
+
+    const currentVsrDiv = Math.round(((currentValue % 1).toFixed(2)) / 0.02);
+
+    for (let j = 0; j <= vernierDivisions; j++) {
+      let vx = vernierX + (j * vDivPx);
+      let isMajor = j % 5 === 0;
+
+      // Highlight Coinciding Line
+      let isCoinciding = (j === currentVsrDiv);
+
+      ctx.beginPath();
+      ctx.moveTo(vx, mainScaleY + mainScaleHeight);
+      ctx.lineTo(vx, mainScaleY + mainScaleHeight + (isMajor ? 16 : 10));
+      ctx.strokeStyle = isCoinciding ? '#dc2626' : '#000000';
+      ctx.lineWidth = isCoinciding ? 2.5 : (isMajor ? 1.5 : 1);
+      ctx.stroke();
+
+      if (isMajor) {
+        ctx.fillStyle = isCoinciding ? '#dc2626' : '#000000';
+        ctx.font = '900 10px Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(j / 5, vx, mainScaleY + mainScaleHeight + 28);
+      }
+    }
+
+    // Vernier Zero Indicator Red Arrow
+    ctx.beginPath();
+    ctx.moveTo(vernierX, mainScaleY + mainScaleHeight + 2);
+    ctx.lineTo(vernierX - 4, mainScaleY + mainScaleHeight + 8);
+    ctx.lineTo(vernierX + 4, mainScaleY + mainScaleHeight + 8);
+    ctx.closePath();
+    ctx.fillStyle = '#dc2626';
+    ctx.fill();
+  }
+
+  // Setup Canvas on Load
+  setTimeout(() => {
+    resizeCanvas();
+    updateReading(0.00);
+  }, 100);
+</script>
+
+</body>
+</html>
